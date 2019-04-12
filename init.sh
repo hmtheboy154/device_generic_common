@@ -495,6 +495,9 @@ function do_bootcomplete()
 		X80*Power)
 			set_property power.nonboot-cpu-off 1
 			;;
+		X80*Power)
+			set_property power.nonboot-cpu-off 1
+			;;
 		*)
 			;;
 	esac
