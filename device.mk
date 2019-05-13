@@ -151,6 +151,10 @@ PRODUCT_PRODUCT_PROPERTIES += \
     ro.lmk.kill_timeout_ms=100 \
     ro.lmk.use_minfree_levels=true
 
+# Recents
+PRODUCT_PROPERTY_OVERRIDES += \
+   ro.recents.grid=true
+
 PRODUCT_COPY_FILES := \
     $(if $(wildcard $(PRODUCT_DIR)init.rc),$(PRODUCT_DIR)init.rc:root/init.rc) \
     $(if $(wildcard $(PRODUCT_DIR)init.sh),$(PRODUCT_DIR),$(LOCAL_PATH)/)init.sh:system/etc/init.sh \
