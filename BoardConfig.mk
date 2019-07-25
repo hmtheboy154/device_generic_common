@@ -106,11 +106,13 @@ ZIP_OPTIMIZATION_NO_INTEGRITY := true
 
 DEVICE_MANIFEST_FILE := device/generic/common/manifest.xml
 
-BOARD_SEPOLICY_DIRS += device/generic/common/sepolicy \
+BOARD_SEPOLICY_DIRS += device/generic/common/sepolicy/nonplat \
                        system/bt/vendor_libs/linux/sepolicy \
 SELINUX_IGNORE_NEVERALLOWS := true
 # Vendor Interface Manifest
 # DEVICE_MATRIX_FILE := device/generic/common/compatibility_matrix.xml
+
+BOARD_PLAT_PRIVATE_SEPOLICY_DIR := device/generic/common/sepolicy/plat_private
 
 # Bliss optimizations
 WITH_BLISS_CHARGER := false
