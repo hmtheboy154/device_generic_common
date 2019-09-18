@@ -71,17 +71,17 @@ KERNEL_CONFIG_DIR := arch/arm/configs
 endif
 
 ifeq ($(BUILD_KERNEL_WITH_CLANG),true)
-CROSS_COMPILE := x86_64-linux-androidkernel-
+KERNEL_CROSS_COMPILE := x86_64-linux-androidkernel-
 KERNEL_CLANG_CLAGS := CC=clang HOSTCC=clang CLANG_TRIPLE=x86_64-linux-gnu- PATH=$(abspath $(LLVM_PREBUILTS_BASE)/$(BUILD_OS)-x86/$(LLVM_PREBUILTS_VERSION)/bin):$$PATH
 else
 ifeq ($(TARGET_KERNEL_ARCH),x86_64)
 ifeq ($(HOST_OS),darwin)
-CROSS_COMPILE ?= $(abspath prebuilts/gcc/darwin-x86/host/i686-apple-darwin-4.2.1/bin)/i686-apple-darwin11-
+KERNEL_CROSS_COMPILE ?= $(abspath prebuilts/gcc/darwin-x86/host/i686-apple-darwin-4.2.1/bin)/i686-apple-darwin11-
 else
-CROSS_COMPILE ?= $(abspath prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.11-4.6/bin)/x86_64-linux-
+KERNEL_CROSS_COMPILE ?= $(abspath prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.11-4.6/bin)/x86_64-linux-
 endif
 else
-CROSS_COMPILE ?= $(abspath $(TARGET_TOOLS_PREFIX))
+KERNEL_CROSS_COMPILE ?= $(abspath $(TARGET_TOOLS_PREFIX))
 endif
 endif
 
