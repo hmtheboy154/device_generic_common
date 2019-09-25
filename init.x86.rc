@@ -47,7 +47,7 @@ on boot
     # workaround for h.265 slowness
     setprop sys.media.vdec.drop 0
     # some custom settings
-    settings put global enable_freeform_support 1
+    # settings put global enable_freeform_support 1
 
 service wpa_supplicant /vendor/bin/hw/wpa_supplicant -dd \
     -O/data/vendor/wifi/wpa/sockets -puse_p2p_group_interface=1 \
