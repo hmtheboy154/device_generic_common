@@ -89,3 +89,5 @@ DEVICE_MANIFEST_FILE := device/generic/common/manifest.xml
 
 BOARD_SEPOLICY_DIRS += device/generic/common/sepolicy \
                        system/bt/vendor_libs/linux/sepolicy \
+
+BOARD_BUILD_SYSTEM_ROOT_IMAGE:= true
