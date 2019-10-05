@@ -111,6 +111,7 @@ BOARD_SEPOLICY_DIRS += device/generic/common/sepolicy \
                        system/bt/vendor_libs/linux/sepolicy \
                        
 BOARD_BUILD_SYSTEM_ROOT_IMAGE:= true
+BUILD_BROKEN_PHONY_TARGETS := true 
 
 # Bliss optimizations
 WITH_BLISS_CHARGER := false
