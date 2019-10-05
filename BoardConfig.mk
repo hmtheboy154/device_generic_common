@@ -112,6 +112,7 @@ BOARD_SEPOLICY_DIRS += device/generic/common/sepolicy \
                        
 BOARD_BUILD_SYSTEM_ROOT_IMAGE:= true
 BUILD_BROKEN_PHONY_TARGETS := true 
+USE_XML_AUDIO_POLICY_CONF := 1 
 
 # Bliss optimizations
 WITH_BLISS_CHARGER := false
