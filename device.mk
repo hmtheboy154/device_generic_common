@@ -252,7 +252,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Inherit some common Bliss stuff.
 $(call inherit-product, vendor/bliss/config/common.mk)
-$(call inherit-product, vendor/x86/addon.mk)
+# $(call inherit-product, vendor/bliss/config/BoardConfigBliss.mk)
+$(call inherit-product-if-exists, vendor/x86/addon.mk)
 
 # Get Android 8.0 HIDL HALs
 $(call inherit-product,$(LOCAL_PATH)/treble.mk)
