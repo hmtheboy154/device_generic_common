@@ -284,6 +284,9 @@ $(call inherit-product-if-exists,$(LOCAL_PATH)/nativebridge/nativebridge.mk)
 
 # Get proprietary files if any exists
 #$(call inherit-product-if-exists,vendor/bliss_priv/device-vendor.mk)
+$(call inherit-product-if-exists, vendor/google/chromeos-x86/target/native_bridge_arm_on_x86.mk)
+#$(call inherit-product-if-exists, vendor/google/chromeos-x86/target/houdini.mk)
+$(call inherit-product-if-exists, vendor/google/chromeos-x86/target/widevine.mk)
 
 # Get native bridge settings
 #$(call inherit-product-if-exists,$(LOCAL_PATH)/nativebridge/nativebridge.mk)
