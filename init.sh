@@ -323,6 +323,12 @@ function init_hal_sensors()
 			set_property ro.iio.accel.x.opt_scale -1
 			set_property ro.iio.accel.y.opt_scale -1
 			;;
+		*Venue*8*Pro*3845*)
+			set_property ro.iio.accel.order 102
+			;;
+		*SP111-33*)
+			set_property ro.iio.accel.quirks no-trig
+			;&
 		*ST70416-6*)
 			set_property ro.iio.accel.order 102
 			;;
