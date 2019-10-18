@@ -12,12 +12,50 @@
  */
 
 #define LOG_TAG "libnb"
-#define LOG_NDEBUG 1
+#define LOG_NDEBUG 0
 
 #include <dlfcn.h>
 #include <cutils/log.h>
 #include <cutils/properties.h>
 #include "nativebridge/native_bridge.h"
+
+// Symbols required by libhoudini.so (used to be provided by libdl.so)
+
+extern "C" {
+
+__attribute__((__weak__, visibility("default")))
+int __loader_android_get_application_target_sdk_version();
+
+__attribute__((__weak__, visibility("default")))
+void __loader_android_set_application_target_sdk_version(int target);
+
+__attribute__((__weak__, visibility("default")))
+struct android_namespace_t* __loader_android_get_exported_namespace(const char* name);
+
+__attribute__((__weak__, visibility("default")))
+void __loader_android_update_LD_LIBRARY_PATH(const char* ld_library_path);
+
+__attribute__((__weak__))
+int android_get_application_target_sdk_version() {
+  return __loader_android_get_application_target_sdk_version();
+}
+
+__attribute__((__weak__))
+void android_set_application_target_sdk_version(int target) {
+  __loader_android_set_application_target_sdk_version(target);
+}
+
+__attribute__((__weak__))
+struct android_namespace_t* android_get_exported_namespace(const char* name) {
+  return __loader_android_get_exported_namespace(name);
+}
+
+__attribute__((__weak__))
+void android_update_LD_LIBRARY_PATH(const char* ld_library_path) {
+  __loader_android_update_LD_LIBRARY_PATH(ld_library_path);
+}
+
+};
 
 namespace android {
 
@@ -39,6 +77,16 @@ static NativeBridgeCallbacks *get_callbacks()
 #endif
                 "/libhoudini.so";
         if (!native_handle) {
+            void *libdl = dlopen("libdl.so", RTLD_LAZY);
+            if (!libdl) {
+                ALOGE("Unable to open libdl.so: %s", dlerror());
+            }
+            else {
+                void *android_get_application_target_sdk_version = dlsym(libdl, "android_get_application_target_sdk_version");
+                if (!android_get_application_target_sdk_version) {
+                    ALOGE("Unable to find android_get_application_target_sdk_version: %s", dlerror());
+                }
+            }
             native_handle = dlopen(libnb, RTLD_LAZY);
             if (!native_handle) {
                 ALOGE("Unable to open %s: %s", libnb, dlerror());
