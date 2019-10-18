@@ -15,8 +15,7 @@ urls[5]=http://goo.gl/CtKjxx
 
 mount_sfs()
 {
-	lodevice=`losetup -r -f -s $1`
-	[ -n "$lodevice" ] && mount -o 'context="u:object_r:system_file:s0"' $lodevice $2
+	mount -o 'context="u:object_r:system_file:s0"' $1 $2
 }
 
 if [ -z "$1" ]; then
