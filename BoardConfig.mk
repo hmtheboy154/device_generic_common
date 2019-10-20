@@ -91,7 +91,9 @@ DEVICE_MANIFEST_FILE := device/generic/common/manifest.xml
 
 BOARD_SEPOLICY_DIRS += device/generic/common/sepolicy \
                        system/bt/vendor_libs/linux/sepolicy \
-
+                       
+-include vendor/google/chromeos-x86/board/native_bridge_arm_on_x86.mk
+                       
 BOARD_BUILD_SYSTEM_ROOT_IMAGE:= true
 BUILD_BROKEN_PHONY_TARGETS := true
 USE_XML_AUDIO_POLICY_CONF := 1
