@@ -68,6 +68,8 @@ PRODUCT_PROPERTY_OVERRIDES := \
     media.sf.omx-plugin=libffmpeg_omx.so \
     media.sf.extractor-plugin=libffmpeg_extractor.so
 
+PRODUCT_SHIPPING_API_LEVEL := 19
+
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES := \
     ro.arch=x86 \
     persist.rtc_local_time=1 \
