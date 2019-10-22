@@ -14,6 +14,27 @@
 # limitations under the License.
 #
 
+ifeq ($(USE_GMS),true)
+
+PRODUCT_PACKAGES += \
+	GmsCore \
+	privapp-permissions-com.google.android.gms.xml \
+	GsfProxy \
+	MozillaNlpBackend \
+	NominatimNlpBackend \
+	com.google.android.maps \
+	com.google.android.maps.jar \
+	com.google.android.maps.xml \
+	OpenWeatherMapWeatherProvider \
+	additional_repos.xml \
+	GoogleServicesFramework \
+	GoogleContactsSyncAdapter \
+	PlayGames \
+	Vending \
+	GoogleLoginService \
+    
+endif
+
 PRODUCT_DIR := $(dir $(lastword $(filter-out device/common/%,$(filter device/%,$(ALL_PRODUCTS)))))
 
 PRODUCT_PROPERTY_OVERRIDES := \
