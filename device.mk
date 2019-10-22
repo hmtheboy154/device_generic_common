@@ -14,6 +14,28 @@
 # limitations under the License.
 #
 
+ifeq ($(USE_FOSS),true)
+$(call inherit-product-if-exists, vendor/foss/foss.mk)
+# Get GMS
+$(call inherit-product-if-exists,vendor/microg/microg.mk)
+# FOSS apps
+PRODUCT_PACKAGES += \
+	FDroid \
+	FDroidPrivilegedExtension \
+	FakeStore \
+	GmsCore \
+	privapp-permissions-com.google.android.gms.xml \
+	GsfProxy \
+	MozillaNlpBackend \
+	NominatimNlpBackend \
+	com.google.android.maps \
+	com.google.android.maps.jar \
+	com.google.android.maps.xml \
+	OpenWeatherMapWeatherProvider \
+	additional_repos.xml
+    
+endif
+
 ifeq ($(USE_GMS),true)
 
 PRODUCT_PACKAGES += \
