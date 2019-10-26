@@ -68,6 +68,9 @@ PRODUCT_PROPERTY_OVERRIDES := \
     media.sf.omx-plugin=libffmpeg_omx.so \
     media.sf.extractor-plugin=libffmpeg_extractor.so
 
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.mot.deep.sleep.supported=true
+
 PRODUCT_SHIPPING_API_LEVEL := 19
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES := \
