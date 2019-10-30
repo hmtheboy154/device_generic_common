@@ -139,6 +139,11 @@ PRODUCT_AAPT_PREF_CONFIG := mdpi
 
 DEVICE_PACKAGE_OVERLAYS := $(LOCAL_PATH)/overlay
 
+# Enable MultiWindow
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.debug.multi_window=true
+    persist.sys.debug.desktop_mode=true
+
 # Get Android 8.0 HIDL HALs
 $(call inherit-product,$(LOCAL_PATH)/treble.mk)
 
