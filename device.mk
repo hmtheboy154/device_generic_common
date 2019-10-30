@@ -180,3 +180,7 @@ $(call inherit-product,$(if $(wildcard $(PRODUCT_DIR)packages.mk),$(PRODUCT_DIR)
 # Get proprietary files if any exists
 $(call inherit-product-if-exists, vendor/google/chromeos-x86/target/native_bridge_arm_on_x86.mk)
 $(call inherit-product-if-exists, vendor/google/chromeos-x86/target/widevine.mk)
+
+# Get Bliss configs if any exists
+$(call inherit-product-if-exists, vendor/bliss/config/common.mk)
+$(call inherit-product-if-exists, vendor/bliss/config/common_full_tablet_wifionly.mk)
