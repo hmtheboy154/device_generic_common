@@ -102,3 +102,6 @@ PRODUCT_HOST_PACKAGES += \
 PRODUCT_PACKAGES += \
     Eleven \
     TSCalibration2 \
+    Superuser \
+    com.thirdparty.superuser \
+    com.koushikdutta.widgets \
