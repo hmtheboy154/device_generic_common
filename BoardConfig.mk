@@ -66,7 +66,7 @@ SF_START_GRAPHICS_ALLOCATOR_SERVICE := true
 
 USE_CAMERA_STUB ?= false
 
-SUPERUSER_EMBEDDED := true
+# SUPERUSER_EMBEDDED := true
 SUPERUSER_PACKAGE_PREFIX := com.thirdparty.superuser
 
 # This enables the wpa wireless driver
