@@ -191,5 +191,16 @@ $(call inherit-product-if-exists,vendor/google/chromeos-x86/target/widevine.mk)
 # Get Bliss configs if any exists
 $(call inherit-product-if-exists,vendor/bliss/config/common.mk)
 $(call inherit-product-if-exists,vendor/bliss/config/common_full_tablet_wifionly.mk)
+$(call inherit-product-if-exists,vendor/bliss/config/bliss_audio.mk)
 $(call inherit-product-if-exists,vendor/x86/addon.mk)
 $(call inherit-product-if-exists,vendor/magisk/magisk.mk) 
+
+# Copy all Bliss-specific init rc files
+$(foreach f,$(wildcard vendor/bliss/prebuilt/common/etc/init/*.rc),\
+$(eval PRODUCT_COPY_FILES += $(f):system/etc/init/$(notdir $f)))
+
+$(foreach f,$(wildcard vendor/bliss/prebuilt/common/bin/*),\
+$(eval PRODUCT_COPY_FILES += $(f):system/bin/$(notdir $f)))
+
+$(foreach f,$(wildcard vendor/bliss/prebuilt/common/media/*),\
+$(eval PRODUCT_COPY_FILES += $(f):$(TARGET_COPY_OUT_PRODUCT)/media/$(notdir $f)))
