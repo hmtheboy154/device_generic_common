@@ -58,6 +58,8 @@ function init_misc()
 			ip link add link wifi_eth name wlan0 type virt_wifi
 		fi
 	fi
+	
+	set_property ro.bliss.device "Bliss-OS $PRODUCT"
 }
 
 function init_hal_audio()

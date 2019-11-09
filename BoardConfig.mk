@@ -99,3 +99,23 @@ USE_XML_AUDIO_POLICY_CONF := 1
 
 # Include support for ARM on x86 native bridge
 -include vendor/google/chromeos-x86/board/native_bridge_arm_on_x86.mk
+
+# Bliss optimizations
+WITH_BLISS_CHARGER := false
+TARGET_PC_BUILD := true
+
+# Bliss OS specific 
+VER := 12.0
+RELEASE_OS_TITLE := Bliss-OS
+BLISS_BUILD := Bliss-OS
+BUILD_NAME_VARIANT := Bliss-OS 
+BLISS_VERSION_MAINTENANCE := Alpha-Dev
+BLISSIFY := true
+BLISS_GRAPHITE := true
+BLISS_STRICT := false
+FLOOP_NEST_OPTIMIZE := true
+BLISS_PIPE := true
+BLISS_GOMP := true
+BLISS_EXTRAGCC := true
+FAST_MATH := true
+LINK_TIME_OPTIMIZATIONS := true
