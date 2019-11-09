@@ -201,6 +201,3 @@ $(eval PRODUCT_COPY_FILES += $(f):system/etc/init/$(notdir $f)))
 
 $(foreach f,$(wildcard vendor/bliss/prebuilt/common/bin/*),\
 $(eval PRODUCT_COPY_FILES += $(f):system/bin/$(notdir $f)))
-
-$(foreach f,$(wildcard vendor/bliss/prebuilt/common/media/*),\
-$(eval PRODUCT_COPY_FILES += $(f):$(TARGET_COPY_OUT_PRODUCT)/media/$(notdir $f)))
