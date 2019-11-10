@@ -59,7 +59,7 @@ function init_misc()
 		fi
 	fi
 	
-	set_property ro.bliss.device "Bliss-OS $PRODUCT"
+	set_property ro.bliss.device "Bliss-OS $(cat $DMIPATH/sys_vendor) $PRODUCT"
 }
 
 function init_hal_audio()
