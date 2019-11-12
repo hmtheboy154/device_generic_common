@@ -193,7 +193,8 @@ $(call inherit-product-if-exists,vendor/bliss/config/common.mk)
 $(call inherit-product-if-exists,vendor/bliss/config/common_full_tablet_wifionly.mk)
 $(call inherit-product-if-exists,vendor/bliss/config/bliss_audio.mk)
 $(call inherit-product-if-exists,vendor/x86/addon.mk)
-$(call inherit-product-if-exists,vendor/magisk/magisk.mk) 
+$(call inherit-product-if-exists,vendor/magisk/magisk.mk)
+$(call inherit-product-if-exists,vendor/fdroid/config.mk)
 
 # Copy all Bliss-specific init rc files
 $(foreach f,$(wildcard vendor/bliss/prebuilt/common/etc/init/*.rc),\
