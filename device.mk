@@ -38,11 +38,11 @@ PRODUCT_PACKAGES += \
 	com.google.android.maps.xml \
 	OpenWeatherMapWeatherProvider \
 	additional_repos.xml
-    
+
 endif
 
 ifeq ($(USE_GMS),true)
-$(call inherit-product-if-exists,vendor/fdroid/config.mk)
+$(call inherit-product,vendor/fdroid/config.mk)
 
 PRODUCT_PACKAGES += \
 	GmsCore \
@@ -60,7 +60,7 @@ PRODUCT_PACKAGES += \
 	PlayGames \
 	Vending \
 	GoogleLoginService \
-    
+
 endif
 
 PRODUCT_DIR := $(dir $(lastword $(filter-out device/common/%,$(filter device/%,$(ALL_PRODUCTS)))))
@@ -185,15 +185,16 @@ $(call inherit-product-if-exists,$(LOCAL_PATH)/nativebridge/nativebridge.mk)
 $(call inherit-product,$(if $(wildcard $(PRODUCT_DIR)packages.mk),$(PRODUCT_DIR),$(LOCAL_PATH)/)packages.mk)
 
 # Get proprietary files if any exists
-# $(call inherit-product-if-exists,vendor/google/chromeos-x86/target/native_bridge_arm_on_x86.mk)
-$(call inherit-product-if-exists,vendor/google/chromeos-x86/target/houdini.mk)
-$(call inherit-product-if-exists,vendor/google/chromeos-x86/target/widevine.mk)
+$(call inherit-product,vendor/google/chromeos-x86/target/native_bridge_arm_on_x86.mk)
+$(call inherit-product,vendor/google/chromeos-x86/target/houdini.mk)
+$(call inherit-product,vendor/google/chromeos-x86/target/widevine.mk)
 
 # Get Bliss configs if any exists
-$(call inherit-product-if-exists,vendor/bliss/config/common.mk)
-$(call inherit-product-if-exists,vendor/bliss/config/common_full_tablet_wifionly.mk)
-$(call inherit-product-if-exists,vendor/bliss/config/bliss_audio.mk)
-$(call inherit-product-if-exists,vendor/x86/addon.mk)
+$(call inherit-product,vendor/bliss/config/common.mk)
+$(call inherit-product,vendor/bliss/config/common_full_tablet_wifionly.mk)
+$(call inherit-product,vendor/bliss/config/bliss_audio.mk)
+$(call inherit-product,vendor/x86/addon.mk)
+$(call inherit-product,vendor/fdroid/config.mk)
 $(call inherit-product-if-exists,vendor/magisk/magisk.mk)
 
 # Copy all Bliss-specific init rc files

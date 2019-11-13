@@ -90,8 +90,10 @@ ZIP_OPTIMIZATION_NO_INTEGRITY := true
 DEVICE_MANIFEST_FILE := device/generic/common/manifest.xml
 
 BOARD_SEPOLICY_DIRS += device/generic/common/sepolicy \
-                       system/bt/vendor_libs/linux/sepolicy \
-                       
+                       system/bt/vendor_libs/linux/sepolicy
+
+BOARD_SEPOLICY_DIRS += vendor/google/chromeos-x86/sepolicy
+
 BOARD_BUILD_SYSTEM_ROOT_IMAGE:= true
 BUILD_BROKEN_PHONY_TARGETS := true
 BUILD_BROKEN_USES_NETWORK := true
