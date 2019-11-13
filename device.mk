@@ -193,7 +193,7 @@ $(call inherit-product,vendor/google/chromeos-x86/target/widevine.mk)
 $(call inherit-product,vendor/bliss/config/common.mk)
 $(call inherit-product,vendor/bliss/config/common_full_tablet_wifionly.mk)
 $(call inherit-product,vendor/bliss/config/bliss_audio.mk)
-$(call inherit-product,vendor/x86/addon.mk)
+# $(call inherit-product,vendor/x86/addon.mk)
 $(call inherit-product,vendor/fdroid/config.mk)
 $(call inherit-product-if-exists,vendor/magisk/magisk.mk)
 
