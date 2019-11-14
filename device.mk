@@ -61,6 +61,8 @@ PRODUCT_PACKAGES += \
 	GoogleContactsSyncAdapter \
 	PlayGames \
 	Vending \
+	Phonesky \
+	DroidGuard \
 	GoogleLoginService \
 
 endif
