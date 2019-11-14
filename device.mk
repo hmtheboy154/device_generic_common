@@ -27,7 +27,7 @@ $(call inherit-product-if-exists,vendor/microg/microg.mk)
 PRODUCT_PACKAGES += \
 	FDroid \
 	FDroidPrivilegedExtension \
-	FakeStore \	
+	FakeStore \
 	Phonesky \
 	DroidGuard \
 	GmsCore \
