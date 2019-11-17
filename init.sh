@@ -60,6 +60,17 @@ function init_misc()
 	fi
 	
 	set_property ro.bliss.device "Bliss-OS $(cat $DMIPATH/sys_vendor) $PRODUCT"
+	set_property ro.product.system.manufacturer "$(cat $DMIPATH/sys_vendor)"
+	set_property ro.product.system.model "$PRODUCT"
+	set_property dalvik.vm.native.bridge 1
+	set_property persist.sys.nativebridge 1
+	set_property ro.enable.native.bridge.exec 1
+	
+	# Define carrier if there is none
+	local carrier=`getprop ro.carrier`
+	if [carrier == "unknown"]; then
+		set_property ro.carrier "Bliss PC"
+	fi
 }
 
 function init_hal_audio()
