@@ -47,6 +47,19 @@ ifeq ($(USE_GMS),true)
 $(call inherit-product-if-exists,vendor/fdroid/config.mk)
 
 PRODUCT_PACKAGES += \
+    GmsCoreSetup \
+    GoogleBackupTransport \
+    GoogleCalendarSyncAdapter \
+    GoogleContactsSyncAdapter \
+    GoogleExtServices \
+    GoogleExtShared \
+    GoogleFeedback \
+    GoogleLoginService \
+    GoogleOneTimeInitializer \
+    GooglePackageInstaller \
+    GooglePartnerSetup \
+    GooglePrintRecommendationService \
+    GoogleRestore \
 	GmsCore \
 	privapp-permissions-com.google.android.gms.xml \
 	GsfProxy \
