@@ -193,6 +193,9 @@ $(call inherit-product,vendor/google/chromeos-x86/target/native_bridge_arm_on_x8
 $(call inherit-product,vendor/google/chromeos-x86/target/houdini.mk)
 $(call inherit-product,vendor/google/chromeos-x86/target/widevine.mk)
 
+# Get proprietary files if any exists
+$(call inherit-product-if-exists,vendor/bliss_priv/device-vendor.mk)
+
 # Get Bliss configs if any exists
 $(call inherit-product,vendor/bliss/config/common.mk)
 $(call inherit-product,vendor/bliss/config/common_full_tablet_wifionly.mk)
