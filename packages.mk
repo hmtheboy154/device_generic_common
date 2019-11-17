@@ -102,3 +102,4 @@ PRODUCT_HOST_PACKAGES += \
 PRODUCT_PACKAGES += \
     Eleven \
     TSCalibration2 \
+    nano
