@@ -194,7 +194,7 @@ $(call inherit-product,vendor/google/chromeos-x86/target/houdini.mk)
 $(call inherit-product,vendor/google/chromeos-x86/target/widevine.mk)
 
 # Get proprietary files if any exists
-$(call inherit-product-if-exists,vendor/bliss_priv/device-vendor.mk)
+# $(call inherit-product-if-exists,vendor/bliss_priv/device-vendor.mk)
 
 # Get Bliss configs if any exists
 $(call inherit-product,vendor/bliss/config/common.mk)

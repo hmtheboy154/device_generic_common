@@ -2,6 +2,9 @@
 # BoardConfig.mk for x86 platform
 #
 
+# Include support for ARM on x86 native bridge
+-include vendor/google/chromeos-x86/board/native_bridge_arm_on_x86.mk
+
 TARGET_BOARD_PLATFORM := android-x86
 
 # Some framework code requires this to enable BT
@@ -98,9 +101,6 @@ BOARD_BUILD_SYSTEM_ROOT_IMAGE:= true
 BUILD_BROKEN_PHONY_TARGETS := true
 BUILD_BROKEN_USES_NETWORK := true
 USE_XML_AUDIO_POLICY_CONF := 1
-
-# Include support for ARM on x86 native bridge
--include vendor/google/chromeos-x86/board/native_bridge_arm_on_x86.mk
 
 # Bliss optimizations
 WITH_BLISS_CHARGER := false
