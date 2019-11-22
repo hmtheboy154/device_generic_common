@@ -1,5 +1,5 @@
-$(PRODUCT_OUT)/build.prop: $(INSTALLED_BUILD_PROP_TARGET)
-	sed -E '/ro.product.manufacturer|ro.product.model/d' $< > $@ && cat $@ > $<
+$(PRODUCT_OUT)/build.prop: $(INSTALLED_BUILD_PROP_TARGET) $(INSTALLED_VENDOR_BUILD_PROP_TARGET)
+	sed -i -E '/ro.product.*manufacturer|ro.product.*model/d' $^ && touch $@
 
 $(BUILT_SYSTEMIMAGE): $(PRODUCT_OUT)/build.prop
 
