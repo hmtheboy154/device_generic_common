@@ -25,8 +25,11 @@ function rmmod_if_exist()
 function init_misc()
 {
 	# device information
-	setprop ro.product.manufacturer "$(cat $DMIPATH/sys_vendor)"
-	setprop ro.product.model "$PRODUCT"
+	set_property ro.product.manufacturer "$(cat $DMIPATH/sys_vendor)"
+	set_property ro.product.model "$PRODUCT"
+	set_property ro.bliss.device "Bliss-OS $(cat $DMIPATH/sys_vendor) $PRODUCT"
+	set_property persist.sys.nativebridge 1
+	set_property ro.enable.native.bridge.exec 1
 
 	# a hack for USB modem
 	lsusb | grep 1a8d:1000 && eject
@@ -321,6 +324,9 @@ function init_hal_sensors()
 			set_property ro.iio.accel.x.opt_scale -1
 			set_property ro.iio.accel.y.opt_scale -1
 			;;
+		*Venue*8*Pro*3845*)
+			set_property ro.iio.accel.order 102
+			;;
 		*SP111-33*)
 			set_property ro.iio.accel.quirks no-trig
 			;&
@@ -486,6 +492,9 @@ function do_bootcomplete()
 			;;
 		VMware*)
 			pm disable com.android.bluetooth
+			;;
+		X80*Power)
+			set_property power.nonboot-cpu-off 1
 			;;
 		X80*Power)
 			set_property power.nonboot-cpu-off 1

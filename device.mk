@@ -14,6 +14,69 @@
 # limitations under the License.
 #
 
+# Boot animation
+TARGET_SCREEN_HEIGHT := 810
+TARGET_SCREEN_WIDTH := 1080
+TARGET_BOOTANIMATION_HALF_RES := true
+
+ifeq ($(USE_FOSS),true)
+$(call inherit-product-if-exists, vendor/foss/foss.mk)
+# Get GMS
+$(call inherit-product-if-exists,vendor/microg/microg.mk)
+# FOSS apps
+PRODUCT_PACKAGES += \
+	FDroid \
+	FDroidPrivilegedExtension \
+	FakeStore \
+	Phonesky \
+	DroidGuard \
+	GmsCore \
+	privapp-permissions-com.google.android.gms.xml \
+	GsfProxy \
+	MozillaNlpBackend \
+	NominatimNlpBackend \
+	com.google.android.maps \
+	com.google.android.maps.jar \
+	com.google.android.maps.xml \
+	OpenWeatherMapWeatherProvider \
+	additional_repos.xml
+
+endif
+
+ifeq ($(USE_GMS),true)
+$(call inherit-product-if-exists,vendor/fdroid/config.mk)
+
+PRODUCT_PACKAGES += \
+	GmsCore \
+	privapp-permissions-com.google.android.gms.xml \
+	GsfProxy \
+	MozillaNlpBackend \
+	NominatimNlpBackend \
+	com.google.android.maps \
+	com.google.android.maps.jar \
+	com.google.android.maps.xml \
+	OpenWeatherMapWeatherProvider \
+	additional_repos.xml \
+	GoogleServicesFramework \
+	GoogleContactsSyncAdapter \
+	PlayGames \
+	Vending \
+	Phonesky \
+	DroidGuard \
+	GoogleLoginService \
+
+endif
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.mot.deep.sleep.supported=true
+
+PRODUCT_SHIPPING_API_LEVEL := 19
+
+# Enable MultiWindow
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.debug.multi_window=true
+    persist.sys.debug.desktop_mode=true
+
 PRODUCT_DIR := $(dir $(lastword $(filter-out device/common/%,$(filter device/%,$(ALL_PRODUCTS)))))
 
 PRODUCT_PROPERTY_OVERRIDES := \
@@ -50,6 +113,7 @@ PRODUCT_COPY_FILES += \
     device/sample/etc/old-apns-conf.xml:system/etc/old-apns-conf.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_tv.xml:system/etc/media_codecs_google_tv.xml \
     frameworks/native/data/etc/tablet_core_hardware.xml:system/etc/permissions/tablet_core_hardware.xml \
     frameworks/native/data/etc/android.hardware.audio.low_latency.xml:system/etc/permissions/android.hardware.audio.low_latency.xml \
     frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml \
@@ -73,6 +137,12 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.freeform_window_management.xml:system/etc/permissions/android.software.freeform_window_management.xml \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
     frameworks/native/data/etc/android.software.sip.xml:system/etc/permissions/android.software.sip.xml \
+    frameworks/native/data/etc/android.software.activities_on_secondary_displays.xml:system/etc/permissions/android.software.activities_on_secondary_displays.xml \
+    frameworks/native/data/etc/android.software.midi.xml:system/etc/permissions/android.software.midi.xml \
+    frameworks/native/data/etc/android.software.picture_in_picture.xml:system/etc/permissions/android.software.picture_in_picture.xml \
+    frameworks/native/data/etc/android.software.print.xml:system/etc/permissions/android.software.print.xml \
+    frameworks/native/data/etc/android.software.webview.xml:system/etc/permissions/android.software.webview.xml \
+    frameworks/native/data/etc/android.hardware.gamepad.xml:system/etc/permissions/android.hardware.gamepad.xml \
     $(foreach f,$(wildcard $(LOCAL_PATH)/alsa/*),$(f):$(subst $(LOCAL_PATH),system/etc,$(f))) \
     $(foreach f,$(wildcard $(LOCAL_PATH)/idc/*.idc $(LOCAL_PATH)/keylayout/*.kl),$(f):$(subst $(LOCAL_PATH),system/usr,$(f)))
 
@@ -117,3 +187,28 @@ $(call inherit-product-if-exists,$(if $(wildcard vendor/google/products/gms.mk),
 $(call inherit-product-if-exists,$(LOCAL_PATH)/nativebridge/nativebridge.mk)
 
 $(call inherit-product,$(if $(wildcard $(PRODUCT_DIR)packages.mk),$(PRODUCT_DIR),$(LOCAL_PATH)/)packages.mk)
+
+# Get proprietary files if any exists
+$(call inherit-product,vendor/google/chromeos-x86/target/native_bridge_arm_on_x86.mk)
+$(call inherit-product,vendor/google/chromeos-x86/target/houdini.mk)
+$(call inherit-product,vendor/google/chromeos-x86/target/widevine.mk)
+
+# Get proprietary files if any exists
+# $(call inherit-product-if-exists,vendor/bliss_priv/device-vendor.mk)
+
+# Get Bliss configs if any exists
+$(call inherit-product,vendor/bliss/config/common.mk)
+$(call inherit-product,vendor/bliss/config/common_full_tablet_wifionly.mk)
+$(call inherit-product,vendor/bliss/config/bliss_audio.mk)
+$(call inherit-product-if-exists,vendor/x86/addon.mk)
+$(call inherit-product-if-exists,vendor/fdroid/config.mk)
+$(call inherit-product-if-exists,vendor/magisk/magisk.mk)
+
+# Copy all Bliss-specific init rc files
+$(foreach f,$(wildcard vendor/bliss/prebuilt/common/etc/init/*.rc),\
+$(eval PRODUCT_COPY_FILES += $(f):system/etc/init/$(notdir $f)))
+
+$(foreach f,$(wildcard vendor/bliss/prebuilt/common/bin/*),\
+$(eval PRODUCT_COPY_FILES += $(f):system/bin/$(notdir $f)))
+
+

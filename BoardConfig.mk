@@ -2,6 +2,9 @@
 # BoardConfig.mk for x86 platform
 #
 
+# Include support for ARM on x86 native bridge
+-include vendor/google/chromeos-x86/board/native_bridge_arm_on_x86.mk
+
 TARGET_BOARD_PLATFORM := android-x86
 
 # Some framework code requires this to enable BT
@@ -76,7 +79,7 @@ ifneq ($(strip $(BOARD_GPU_DRIVERS)),)
 TARGET_HARDWARE_3D := true
 endif
 
-BOARD_KERNEL_CMDLINE := root=/dev/ram0 androidboot.selinux=permissive$(if $(filter x86_64,$(TARGET_ARCH) $(TARGET_KERNEL_ARCH)),, vmalloc=192M)
+BOARD_KERNEL_CMDLINE := root=/dev/ram0 androidboot.selinux=permissive androidboot.hardware=$(TARGET_PRODUCT) $(if $(filter x86_64,$(TARGET_ARCH) $(TARGET_KERNEL_ARCH)),, vmalloc=192M)
 TARGET_KERNEL_DIFFCONFIG := device/generic/common/selinux_diffconfig
 
 COMPATIBILITY_ENHANCEMENT_PACKAGE := true
@@ -90,8 +93,31 @@ BOARD_SEPOLICY_DIRS += device/generic/common/sepolicy/nonplat \
 
 BOARD_PLAT_PRIVATE_SEPOLICY_DIR := device/generic/common/sepolicy/plat_private
 
+BOARD_SEPOLICY_DIRS += vendor/google/chromeos-x86/sepolicy
+
 BOARD_BUILD_SYSTEM_ROOT_IMAGE := true
 BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE := 33554432
 BOARD_USES_OEMIMAGE := true
 BUILD_BROKEN_USES_NETWORK := true
+BUILD_BROKEN_PHONY_TARGETS := true
 USE_XML_AUDIO_POLICY_CONF := 1
+
+# Bliss optimizations
+WITH_BLISS_CHARGER := false
+TARGET_PC_BUILD := true
+
+# Bliss OS specific 
+VER := 12.0
+RELEASE_OS_TITLE := Bliss-OS
+BLISS_BUILD := Bliss-OS
+BUILD_NAME_VARIANT := Bliss-OS 
+BLISS_VERSION_MAINTENANCE := Alpha-Dev
+BLISSIFY := true
+BLISS_GRAPHITE := true
+BLISS_STRICT := false
+FLOOP_NEST_OPTIMIZE := true
+BLISS_PIPE := true
+BLISS_GOMP := true
+BLISS_EXTRAGCC := true
+FAST_MATH := true
+LINK_TIME_OPTIMIZATIONS := true

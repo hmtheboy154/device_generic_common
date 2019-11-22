@@ -95,7 +95,11 @@ PRODUCT_PACKAGES += \
     libffmpeg_omx \
     media_codecs_ffmpeg.xml
 
+PRODUCT_HOST_PACKAGES += \
+    mksquashfs \
+
 # Third party apps
 PRODUCT_PACKAGES += \
     Eleven \
     TSCalibration2 \
+    nano

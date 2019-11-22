@@ -25,10 +25,9 @@ TARGET_KERNEL_CONFIG ?= goldfish_defconfig
 KERNEL_CONFIG_DIR := arch/arm/configs
 endif
 
-KERNEL_CLANG_CLAGS := HOSTCC=$(abspath $(LLVM_PREBUILTS_PATH)/clang)
 ifeq ($(BUILD_KERNEL_WITH_CLANG),true)
 CROSS_COMPILE := x86_64-linux-androidkernel-
-KERNEL_CLANG_CLAGS += CC=$(abspath $(LLVM_PREBUILTS_PATH)/clang) CLANG_TRIPLE=x86_64-linux-gnu-
+KERNEL_CLANG_CLAGS := CC=clang HOSTCC=clang CLANG_TRIPLE=x86_64-linux-gnu- PATH=$(abspath $(LLVM_PREBUILTS_BASE)/$(BUILD_OS)-x86/$(LLVM_PREBUILTS_VERSION)/bin):$$PATH
 else
 ifeq ($(TARGET_KERNEL_ARCH),x86_64)
 ifeq ($(HOST_OS),darwin)
@@ -41,15 +40,9 @@ CROSS_COMPILE ?= $(abspath $(TARGET_TOOLS_PREFIX))
 endif
 endif
 
-KBUILD_OUTPUT := $(TARGET_OUT_INTERMEDIATES)/kernel
-ifeq ($(HOST_OS),darwin)
-KBUILD_JOBS := $(shell /usr/sbin/sysctl -n hw.ncpu)
-else
-KBUILD_JOBS := $(shell echo $$((1-(`cat /sys/devices/system/cpu/present`))))
-endif
-
-mk_kernel := + $(hide) prebuilts/build-tools/$(HOST_PREBUILT_TAG)/bin/make -j$(KBUILD_JOBS) -l$$(($(KBUILD_JOBS)+2)) \
-	-C $(KERNEL_DIR) O=$(abspath $(KBUILD_OUTPUT)) ARCH=$(TARGET_ARCH) CROSS_COMPILE="$(abspath $(CC_WRAPPER)) $(CROSS_COMPILE)" $(if $(SHOW_COMMANDS),V=1) \
+KBUILD_OUTPUT := $(abspath $(TARGET_OUT_INTERMEDIATES)/kernel)
+mk_kernel := + $(hide) $(MAKE) $(if $(filter darwin,$(HOST_OS)),-j$$(sysctl -n hw.ncpu) -l$$(($$(sysctl -n hw.ncpu)+2)),-j$$(nproc) -l$$(($$(nproc)+2))) \
+	-C $(KERNEL_DIR) O=$(KBUILD_OUTPUT) ARCH=$(TARGET_ARCH) CROSS_COMPILE="$(abspath $(CC_WRAPPER)) $(CROSS_COMPILE)" $(if $(SHOW_COMMANDS),V=1) \
 	YACC=$(abspath $(BISON)) LEX=$(abspath $(LEX)) \
 	$(KERNEL_CLANG_CLAGS)
 
@@ -62,24 +55,14 @@ FIRMWARE_ENABLED := $(shell grep ^CONFIG_FIRMWARE_IN_KERNEL=y $(KERNEL_CONFIG_FI
 # but I don't want to write a complex Android.mk to build kernel.
 # This is the simplest way I can think.
 KERNEL_DOTCONFIG_FILE := $(KBUILD_OUTPUT)/.config
-ifneq ($(filter 0,$(shell grep -s ^$(if $(filter x86,$(TARGET_KERNEL_ARCH)),\#.)CONFIG_64BIT $(KERNEL_DOTCONFIG_FILE) | wc -l)),)
-KERNEL_ARCH_CHANGED := $(KERNEL_DOTCONFIG_FILE)-
-$(KERNEL_ARCH_CHANGED):
-		@touch $@
-endif
+KERNEL_ARCH_CHANGED := $(if $(filter 0,$(shell grep -s ^$(if $(filter x86,$(TARGET_KERNEL_ARCH)),\#.)CONFIG_64BIT $(KERNEL_DOTCONFIG_FILE) | wc -l)),FORCE)
 $(KERNEL_DOTCONFIG_FILE): $(KERNEL_CONFIG_FILE) $(wildcard $(TARGET_KERNEL_DIFFCONFIG)) $(KERNEL_ARCH_CHANGED)
 	$(hide) mkdir -p $(@D) && cat $(wildcard $^) > $@
 	$(hide) ln -sf ../../../../../../prebuilts $(@D)
-	$(hide) rm -f $(KERNEL_ARCH_CHANGED)
+	$(mk_kernel) olddefconfig
 
 BUILT_KERNEL_TARGET := $(KBUILD_OUTPUT)/arch/$(TARGET_ARCH)/boot/$(KERNEL_TARGET)
 $(BUILT_KERNEL_TARGET): $(KERNEL_DOTCONFIG_FILE)
-	# A dirty hack to use ar & ld
-	$(hide) mkdir -p $(OUT_DIR)/.path; ln -sf ../../$(LLVM_PREBUILTS_PATH)/llvm-ar $(OUT_DIR)/.path/ar; ln -sf ../../$(LLVM_PREBUILTS_PATH)/ld.lld $(OUT_DIR)/.path/ld
-ifeq ($(BUILD_KERNEL_WITH_CLANG),true)
-	$(hide) cd $(OUT_DIR)/.path; ln -sf ../../$(dir $(TARGET_TOOLS_PREFIX))x86_64-linux-androidkernel-* .; ln -sf x86_64-linux-androidkernel-as x86_64-linux-gnu-as
-endif
-	$(mk_kernel) olddefconfig
 	$(mk_kernel) $(KERNEL_TARGET) $(if $(MOD_ENABLED),modules)
 	$(if $(FIRMWARE_ENABLED),$(mk_kernel) INSTALL_MOD_PATH=$(abspath $(TARGET_OUT)) firmware_install)
 
@@ -109,7 +92,7 @@ installclean: FILES += $(KBUILD_OUTPUT) $(INSTALLED_KERNEL_TARGET)
 
 TARGET_PREBUILT_KERNEL := $(BUILT_KERNEL_TARGET)
 
-.PHONY: kernel
+.PHONY: kernel $(if $(KERNEL_ARCH_CHANGED),$(KERNEL_HEADERS_COMMON)/linux/binder.h)
 kernel: $(INSTALLED_KERNEL_TARGET) $(KERNEL_MODULES_DEP)
 
 endif # TARGET_PREBUILT_KERNEL
