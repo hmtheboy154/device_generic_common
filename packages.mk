@@ -103,3 +103,21 @@ PRODUCT_PACKAGES += \
     Eleven \
     TSCalibration2 \
     nano
+
+# Debug tools
+PRODUCT_PACKAGES_DEBUG := \
+    avdtptest \
+    avinfo \
+    avtest \
+    bneptest \
+    btmgmt \
+    btmon \
+    btproxy \
+    haltest \
+    l2ping \
+    l2test \
+    mcaptest \
+    rctest \
+
+PRODUCT_HOST_PACKAGES := \
+    qemu-android \
