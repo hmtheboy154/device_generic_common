@@ -189,7 +189,7 @@ $(call inherit-product-if-exists,$(LOCAL_PATH)/nativebridge/nativebridge.mk)
 $(call inherit-product,$(if $(wildcard $(PRODUCT_DIR)packages.mk),$(PRODUCT_DIR),$(LOCAL_PATH)/)packages.mk)
 
 # Get proprietary files if any exists
-$(call inherit-product,vendor/google/chromeos-x86/target/native_bridge_arm_on_x86.mk)
+# $(call inherit-product,vendor/google/chromeos-x86/target/native_bridge_arm_on_x86.mk)
 $(call inherit-product,vendor/google/chromeos-x86/target/houdini.mk)
 $(call inherit-product,vendor/google/chromeos-x86/target/widevine.mk)
 
