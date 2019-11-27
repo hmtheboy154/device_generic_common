@@ -117,3 +117,6 @@ $(call inherit-product-if-exists,$(if $(wildcard vendor/google/products/gms.mk),
 $(call inherit-product-if-exists,$(LOCAL_PATH)/nativebridge/nativebridge.mk)
 
 $(call inherit-product,$(if $(wildcard $(PRODUCT_DIR)packages.mk),$(PRODUCT_DIR),$(LOCAL_PATH)/)packages.mk)
+
+# Get Bliss OS stuff
+$(call inherit-product,vendor/blissos/config/bliss_os.mk)
