@@ -27,6 +27,9 @@ function init_misc()
 	# device information
 	setprop ro.product.manufacturer "$(cat $DMIPATH/sys_vendor)"
 	setprop ro.product.model "$PRODUCT"
+	set_property ro.bliss.device "Bliss-OS $(cat $DMIPATH/sys_vendor) $PRODUCT"
+	set_property persist.sys.nativebridge 1
+	set_property ro.enable.native.bridge.exec 1
 
 	# a hack for USB modem
 	lsusb | grep 1a8d:1000 && eject
