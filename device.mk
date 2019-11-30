@@ -117,3 +117,17 @@ $(call inherit-product-if-exists,$(if $(wildcard vendor/google/products/gms.mk),
 $(call inherit-product-if-exists,$(LOCAL_PATH)/nativebridge/nativebridge.mk)
 
 $(call inherit-product,$(if $(wildcard $(PRODUCT_DIR)packages.mk),$(PRODUCT_DIR),$(LOCAL_PATH)/)packages.mk)
+
+# Inherit common Bliss stuff
+$(call inherit-product,vendor/blissos/config/bliss_os.mk)
+$(call inherit-product,vendor/blissos/config/common.mk)
+$(call inherit-product,vendor/blissos/config/common_full.mk)
+$(call inherit-product,vendor/blissos/config/BoardConfigBlissOS.mk)
+$(call inherit-product,vendor/blissos/config/common_full_tablet_wifionly.mk)
+$(call inherit-product,vendor/blissos/config/bliss_audio.mk)
+# $(call inherit-product-if-exists,vendor/blissos/addon.mk)
+
+# Get proprietary files if any exists
+# $(call inherit-product,vendor/google/chromeos-x86/target/native_bridge_arm_on_x86.mk)
+# $(call inherit-product,vendor/google/chromeos-x86/target/houdini.mk)
+# $(call inherit-product,vendor/google/chromeos-x86/target/widevine.mk)
