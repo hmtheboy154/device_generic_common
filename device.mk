@@ -125,6 +125,7 @@ $(call inherit-product,vendor/blissos/config/common_full.mk)
 $(call inherit-product,vendor/blissos/config/BoardConfigBlissOS.mk)
 $(call inherit-product,vendor/blissos/config/common_full_tablet_wifionly.mk)
 $(call inherit-product,vendor/blissos/config/bliss_audio.mk)
+$(call inherit-product,vendor/blissos/config/bliss_packages.mk)
 # $(call inherit-product-if-exists,vendor/blissos/addon.mk)
 
 # Get proprietary files if any exists

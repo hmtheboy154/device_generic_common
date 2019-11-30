@@ -117,3 +117,4 @@ PRODUCT_PACKAGES_DEBUG := \
 
 PRODUCT_HOST_PACKAGES := \
     qemu-android \
+
