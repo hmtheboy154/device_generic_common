@@ -128,7 +128,7 @@ $(call inherit-product,vendor/blissos/config/bliss_audio.mk)
 $(call inherit-product,vendor/blissos/config/bliss_packages.mk)
 # $(call inherit-product-if-exists,vendor/blissos/addon.mk)
 # Get proprietary files if any exists
-$(call inherit-product,vendor/bliss_priv/device-vendor.mk)
+$(call inherit-product-if-exists,vendor/bliss_priv/device-vendor.mk)
 
 # Get proprietary files if any exists
 # $(call inherit-product,vendor/google/chromeos-x86/target/native_bridge_arm_on_x86.mk)
