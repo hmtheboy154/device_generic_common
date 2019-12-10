@@ -97,7 +97,6 @@ PRODUCT_PACKAGES += \
 
 # Third party apps
 PRODUCT_PACKAGES += \
-    Eleven \
     TSCalibration2 \
 
 # Debug tools
@@ -117,4 +116,3 @@ PRODUCT_PACKAGES_DEBUG := \
 
 PRODUCT_HOST_PACKAGES := \
     qemu-android \
-
