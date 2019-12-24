@@ -116,3 +116,10 @@ PRODUCT_PACKAGES_DEBUG := \
 
 PRODUCT_HOST_PACKAGES := \
     qemu-android \
+
+# Superuser
+PRODUCT_PACKAGES += \
+    Superuser \
+    su \
+    com.koushikdutta.superuser \
+    
