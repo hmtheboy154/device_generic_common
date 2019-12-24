@@ -134,3 +134,23 @@ $(call inherit-product-if-exists,vendor/bliss_priv/device-vendor.mk)
 # $(call inherit-product,vendor/google/chromeos-x86/target/native_bridge_arm_on_x86.mk)
 # $(call inherit-product,vendor/google/chromeos-x86/target/houdini.mk)
 # $(call inherit-product,vendor/google/chromeos-x86/target/widevine.mk)
+
+# start houdini
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.dalvik.vm.native.bridge=libhoudini.so
+
+PRODUCT_PACKAGES += libhoudini houdini
+PRODUCT_PROPERTY_OVERRIDES += ro.dalvik.vm.isa.arm=x86 ro.enable.native.bridge.exec=1
+
+ENABLE_NATIVEBRIDGE_64BIT := false
+ifeq ($(BOARD_USE_64BIT_USERSPACE),true)
+  ENABLE_NATIVEBRIDGE_64BIT = true
+else
+  ifeq ($(TARGET_SUPPORTS_64_BIT_APPS),true)
+    ENABLE_NATIVEBRIDGE_64BIT = true
+  endif
+endif
+ifeq ($(ENABLE_NATIVEBRIDGE_64BIT),true)
+  PRODUCT_PACKAGES += houdini64
+  PRODUCT_PROPERTY_OVERRIDES += ro.dalvik.vm.isa.arm64=x86_64 ro.enable.native.bridge.exec64=1
+endif
+# end houdini
