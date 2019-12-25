@@ -122,4 +122,5 @@ PRODUCT_PACKAGES += \
     Superuser \
     su \
     com.koushikdutta.superuser \
+    com.thirdparty.superuser \
     
