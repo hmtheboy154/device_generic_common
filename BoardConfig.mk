@@ -48,40 +48,7 @@ BUILD_EMULATOR_GPS_MODULE ?= false
 BUILD_EMULATOR_LIGHTS_MODULE ?= false
 BUILD_EMULATOR_SENSORS_MODULE ?= false
 
-# BUILD_ARM_FOR_X86 := $(WITH_NATIVE_BRIDGE)
-
-# start houdini
-
-# Install Native Bridge
-WITH_NATIVE_BRIDGE := true
-
-# Enable ARM codegen for x86 with Native Bridge
-BUILD_ARM_FOR_X86 := true
-
-# Native Bridge ABI List
-NB_ABI_LIST_32_BIT := armeabi-v7a armeabi
-NB_ABI_LIST_64_BIT := arm64-v8a
-
-# Support 64 Bit Apps
-ifeq ($(ENABLE_NATIVEBRIDGE_64BIT),true)
-  TARGET_CPU_ABI_LIST_64_BIT ?= $(TARGET_CPU_ABI) $(TARGET_CPU_ABI2)
-  TARGET_CPU_ABI_LIST_32_BIT ?= $(TARGET_2ND_CPU_ABI) $(TARGET_2ND_CPU_ABI2)
-  TARGET_CPU_ABI_LIST := \
-      $(TARGET_CPU_ABI_LIST_64_BIT) \
-      $(TARGET_CPU_ABI_LIST_32_BIT) \
-      $(NB_ABI_LIST_32_BIT) \
-      $(NB_ABI_LIST_64_BIT)
-  TARGET_CPU_ABI_LIST_32_BIT += $(NB_ABI_LIST_32_BIT)
-  TARGET_CPU_ABI_LIST_64_BIT += $(NB_ABI_LIST_64_BIT)
-else
-  TARGET_CPU_ABI_LIST_32_BIT ?= $(TARGET_CPU_ABI) $(TARGET_CPU_ABI2)
-  TARGET_CPU_ABI_LIST_32_BIT += $(NB_ABI_LIST_32_BIT)
-  TARGET_CPU_ABI_LIST := $(TARGET_CPU_ABI_LIST_32_BIT)
-endif
-
-BOARD_SEPOLICY_M4DEFS += module_houdini=true
-
-# end houdini
+BUILD_ARM_FOR_X86 := $(WITH_NATIVE_BRIDGE)
 
 BOARD_USE_LIBVA_INTEL_DRIVER := true
 BOARD_USE_LIBVA := true
@@ -97,8 +64,8 @@ SF_START_GRAPHICS_ALLOCATOR_SERVICE := true
 
 USE_CAMERA_STUB ?= false
 
-SUPERUSER_EMBEDDED := true
-#SUPERUSER_PACKAGE_PREFIX := com.android.settings.cyanogenmod.superuser
+# SUPERUSER_EMBEDDED := true
+# SUPERUSER_PACKAGE_PREFIX := com.android.settings.cyanogenmod.superuser
 # SUPERUSER_PACKAGE_PREFIX := com.thirdparty.superuser
 
 # This enables the wpa wireless driver
