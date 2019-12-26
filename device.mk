@@ -104,7 +104,7 @@ $(call inherit-product-if-exists,device/common/gps/gps_as.mk)
 $(call inherit-product-if-exists,$(LOCAL_PATH)/gpu/gpu_mesa.mk)
 
 # Get the sensors hals
-$(call inherit-product-if-exists,hardware/libsensors/sensors.mk)
+$(call inherit-product,hardware/libsensors/sensors.mk)
 
 # Get tablet dalvik parameters
 $(call inherit-product,frameworks/native/build/tablet-10in-xhdpi-2048-dalvik-heap.mk)
@@ -114,6 +114,6 @@ GAPPS_VARIANT ?= pico
 $(call inherit-product-if-exists,$(if $(wildcard vendor/google/products/gms.mk),vendor/google/products/gms.mk,vendor/opengapps/build/opengapps-packages.mk))
 
 # Get native bridge settings
-$(call inherit-product-if-exists,$(LOCAL_PATH)/nativebridge/nativebridge.mk)
+$(call inherit-product,$(LOCAL_PATH)/nativebridge/nativebridge.mk)
 
 $(call inherit-product,$(if $(wildcard $(PRODUCT_DIR)packages.mk),$(PRODUCT_DIR),$(LOCAL_PATH)/)packages.mk)
