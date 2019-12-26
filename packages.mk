@@ -121,6 +121,8 @@ PRODUCT_HOST_PACKAGES := \
 PRODUCT_PACKAGES += \
     Superuser \
     su \
+    SuperSU \
     com.koushikdutta.superuser \
     com.thirdparty.superuser \
+    com.android.settings.cyanogenmod.superuser \
     
