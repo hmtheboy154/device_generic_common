@@ -116,4 +116,27 @@ $(call inherit-product-if-exists,$(if $(wildcard vendor/google/products/gms.mk),
 # Get native bridge settings
 $(call inherit-product,$(LOCAL_PATH)/nativebridge/nativebridge.mk)
 
+# Houdini addons
+# Get proprietary files if any exists
+$(call inherit-product, vendor/google/chromeos-x86/target/native_bridge_arm_on_x86.mk)
+$(call inherit-product, vendor/google/chromeos-x86/target/houdini.mk)
+
+WITH_NATIVE_BRIDGE := true
+# TARGET_CPU_ABI2 must be set to make soong build additional ARM code
+# However, if no native bridge is bundled, the system does not support
+# ARM binaries by default, yet it indicates support through
+# ro.product.cpu.abi2 in build.prop.
+
+# Attempt to reset ro.product.cpu.abi2 using
+# https://github.com/LineageOS/android_build/commit/94282042cac8dc66e9935c8d7455bd323b0b6716
+PRODUCT_BUILD_PROP_OVERRIDES += TARGET_CPU_ABI2=
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.dalvik.vm.isa.arm=x86 \
+    ro.enable.native.bridge.exec=1 \
+    ro.dalvik.vm.native.bridge=libhoudini.so
+
+# Widevine addons
+$(call inherit-product, vendor/google/chromeos-x86/target/widevine.mk)
+
 $(call inherit-product,$(if $(wildcard $(PRODUCT_DIR)packages.mk),$(PRODUCT_DIR),$(LOCAL_PATH)/)packages.mk)

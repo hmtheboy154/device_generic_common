@@ -95,3 +95,5 @@ BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE := 59554432
 BOARD_USES_OEMIMAGE := true
 BUILD_BROKEN_USES_NETWORK := true
 USE_XML_AUDIO_POLICY_CONF := 1
+
+include vendor/google/chromeos-x86/board/native_bridge_arm_on_x86.mk
