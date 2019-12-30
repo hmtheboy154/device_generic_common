@@ -17,5 +17,6 @@
  */
 -->
 <devices>
-    <device name="Power Button" />
+    <device name="Power State" />
+    <!--<device name="Power Button" /> -->
 </devices>
