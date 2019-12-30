@@ -126,3 +126,5 @@ PRODUCT_PACKAGES += \
     com.thirdparty.superuser \
     com.android.settings.cyanogenmod.superuser \
     
+PRODUCT_PACKAGES += \
+	busybox-ndk \
