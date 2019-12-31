@@ -128,3 +128,11 @@ PRODUCT_PACKAGES += \
     
 PRODUCT_PACKAGES += \
 	busybox-ndk \
+    nano \
+    bash \
+    htop \
+    zip \
+    vim \
+    unrar \
+    pigz \
+    p7zip \
