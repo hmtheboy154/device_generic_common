@@ -104,4 +104,5 @@ ifeq ($(USE_HOUDINI),true)
 
 endif 
 
--include vendor/blissos/configs/BoardConfigBlissOS.mk
+include vendor/blissos/config/BoardConfigBlissOS.mk
+include vendor/blissos/config/BoardConfigBliss.mk
