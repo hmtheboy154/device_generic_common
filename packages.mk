@@ -27,11 +27,9 @@ PRODUCT_PACKAGES := \
     LiveWallpapers \
     LiveWallpapersPicker \
     MagicSmokeWallpapers \
-    NotePad \
     PhaseBeam \
     PinyinIME \
     Provision \
-    RSSReader \
     Taskbar \
     VisualizationWallpapers \
     WallpaperPicker \
