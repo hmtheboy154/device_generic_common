@@ -98,6 +98,10 @@ PRODUCT_PACKAGES += \
     Eleven \
     TSCalibration2 \
 
+# Thermal daemon
+PRODUCT_PACKAGES += \
+    thermal-daemon
+
 # Debug tools
 PRODUCT_PACKAGES_DEBUG := \
     avdtptest \
