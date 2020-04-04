@@ -76,7 +76,8 @@ ifneq ($(strip $(BOARD_GPU_DRIVERS)),)
 TARGET_HARDWARE_3D := true
 endif
 
-BOARD_KERNEL_CMDLINE := root=/dev/ram0$(if $(filter x86_64,$(TARGET_ARCH) $(TARGET_KERNEL_ARCH)),, vmalloc=192M) mitigations=off
+BOARD_KERNEL_CMDLINE := root=/dev/ram0$(if $(filter x86_64,$(TARGET_ARCH) $(TARGET_KERNEL_ARCH)),, vmalloc=192M) mitigations=off i915.modeset=1 i915.
+fastboot=1 i915.enable_fbc=1 drm.vblankoffdelay=1
 TARGET_KERNEL_DIFFCONFIG := device/generic/common/selinux_diffconfig
 
 COMPATIBILITY_ENHANCEMENT_PACKAGE := true
