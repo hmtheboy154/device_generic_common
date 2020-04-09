@@ -284,7 +284,4 @@ $(call inherit-product-if-exists,$(LOCAL_PATH)/nativebridge/nativebridge.mk)
 # Get proprietary files if any exists
 $(call inherit-product-if-exists,vendor/bliss_priv/device-vendor.mk)
 
-# Get native bridge settings
-#$(call inherit-product-if-exists,$(LOCAL_PATH)/nativebridge/nativebridge.mk)
-
 
