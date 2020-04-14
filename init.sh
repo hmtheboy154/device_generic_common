@@ -435,9 +435,25 @@ function init_cpu_governor()
 	}
 }
 
+function set_lowmem()
+{
+	# 512 MB size in kB : https://source.android.com/devices/tech/perf/low-ram
+	SIZE_512MB=512000
+
+	mem_size=`cat /proc/meminfo | grep MemTotal | tr -s ' ' | cut -d ' ' -f 2`
+
+	if [ "$mem_size" -le "$SIZE_512MB" ]
+	then
+		setprop ro.config.low_ram true
+	else
+		setprop ro.config.low_ram false
+	fi
+}
+
 function do_init()
 {
 	init_misc
+	set_lowmem
 	init_hal_audio
 	init_hal_bluetooth
 	init_hal_camera
