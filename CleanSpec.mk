@@ -48,7 +48,8 @@ $(call add-clean-step, rm -f $(TARGET_OUT_VENDOR)/*/*/android.hardware.graphics.
 $(call add-clean-step, rm -rf $(TARGET_OUT_APPS_PRIVILEGED)/Telecom)
 $(call add-clean-step, rm -f $(TARGET_OUT_VENDOR)/*/*/android.hardware.bluetooth@1.0-service* $(TARGET_OUT)/lib*/libbt-vendor.so)
 $(call add-clean-step, rm -f $(TARGET_OUT_VENDOR)/lib*/hw/android.hardware.bluetooth@1.0-impl.so)
-
+$(call add-clean-step, rm -rf $(TARGET_OUT_APPS)/AndroidTerm)
+$(call add-clean-step, rm -rf $(TARGET_OUT_ETC)/wifi)
 # Migrate to versioned VNDK directory layout
 $(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/lib/vndk-sp)
 

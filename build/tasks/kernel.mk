@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2014-2017 The Android-x86 Open Source Project
+# Copyright (C) 2014-2019 The Android-x86 Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -138,7 +138,7 @@ installclean: FILES += $(KBUILD_OUTPUT) $(INSTALLED_KERNEL_TARGET)
 TARGET_PREBUILT_KERNEL := $(BUILT_KERNEL_TARGET)
 
 .PHONY: kernel $(if $(KERNEL_ARCH_CHANGED),$(KERNEL_HEADERS_COMMON)/linux/binder.h)
-kernel: $(INSTALLED_KERNEL_TARGET)
+kernel: $(INSTALLED_KERNEL_TARGET) $(KERNEL_MODULES_DEP)
 
 endif # TARGET_PREBUILT_KERNEL
 

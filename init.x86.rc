@@ -9,6 +9,8 @@ on early-init
     export EGL_LOG_LEVEL info
 #   export EGL_DRIVERS egl_dri2
 
+    exec u:r:init:s0 -- /sbin/modprobe sdcardfs
+
 on init
 
 on fs
@@ -25,6 +27,7 @@ on post-fs-data
     mkdir /data/misc/dhcp 0770 dhcp dhcp
 
     mkdir /data/system 0775 system system
+    chown wifi wifi /data/misc/wifi/wpa_supplicant.conf
 
     # Set indication (checked by vold) that we have finished this action
     setprop vold.post_fs_data_done 1

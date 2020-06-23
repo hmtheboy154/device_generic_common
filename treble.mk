@@ -5,7 +5,8 @@ PRODUCT_PACKAGES += \
 
 # HWComposer HAL
 PRODUCT_PACKAGES += \
-    android.hardware.graphics.composer@2.1-impl
+    android.hardware.graphics.composer@2.1-impl \
+    android.hardware.graphics.composer@2.1-service.drmfb
 
 # Audio HAL
 PRODUCT_PACKAGES += \
@@ -75,3 +76,8 @@ PRODUCT_PACKAGES += \
 # Wifi HAL
 PRODUCT_PACKAGES += \
     android.hardware.wifi@1.0-service
+
+# GPS HAL
+PRODUCT_PACKAGES += \
+    android.hardware.gnss@1.0-impl \
+    android.hardware.gnss@1.0-service

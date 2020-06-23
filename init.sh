@@ -36,7 +36,7 @@ function init_misc()
 
 	# enable sdcardfs if /data is not mounted on tmpfs or 9p
 	mount | grep /data\ | grep -qE 'tmpfs|9p'
-	[ $? -ne 0 ] && modprobe sdcardfs
+	[ $? -eq 0 ] && set_prop_if_empty ro.sys.sdcardfs false
 
 	# remove wl if it's not used
 	local wifi
@@ -128,9 +128,13 @@ function init_hal_bluetooth()
 
 function init_hal_camera()
 {
-	case "$PRODUCT" in
-		e-tab*Pro)
+	case "$UEVENT" in
+		*e-tabPro*)
 			set_prop_if_empty hal.camera.0 0,270
+			set_prop_if_empty hal.camera.2 1,90
+			;;
+		*LenovoideapadD330*)
+			set_prop_if_empty hal.camera.0 0,90
 			set_prop_if_empty hal.camera.2 1,90
 			;;
 		*)
@@ -150,10 +154,8 @@ function set_drm_mode()
 		ET1602*)
 			drm_mode=1366x768
 			;;
-		VMware*)
-			[ -n "$video" ] && drm_mode=$video
-			;;
 		*)
+			[ -n "$video" ] && drm_mode=$video
 			;;
 	esac
 
@@ -180,13 +182,11 @@ function init_hal_gralloc()
 	[ "$VULKAN" = "1" ] && GRALLOC=gbm
 
 	case "$(cat /proc/fb | head -1)" in
-		*virtiodrmfb|*DRM*emulated)
-			if [ "$HWACCEL" != "0" ]; then
-				set_property ro.hardware.hwcomposer ${HWC:-drm}
-				set_property ro.hardware.gralloc ${GRALLOC:-gbm}
-				set_property debug.drm.mode.force ${video:-1280x800}
-			fi
-			;;
+		*virtio*drmfb|*DRM*emulated)
+			HWC=${HWC:-drm}
+			GRALLOC=${GRALLOC:-gbm}
+			video=${video:-1280x768}
+			;&
 		0*i915drmfb|0*inteldrmfb|0*radeondrmfb|0*nouveau*|0*svgadrmfb|0*amdgpudrmfb)
 			if [ "$HWACCEL" != "0" ]; then
 				set_property ro.hardware.hwcomposer ${HWC:-}
@@ -208,6 +208,7 @@ function init_hal_gralloc()
 function init_hal_hwcomposer()
 {
 	# TODO
+	[ "$HWC" = "drmfb" ] && start vendor.hwcomposer-2-1.drmfb
 	return
 }
 
@@ -314,6 +315,10 @@ function init_hal_sensors()
 			modprobe hdaps
 			hal_sensors=hdaps
 			;;
+		*LenovoideapadD330*)
+			set_property ro.iio.accel.quirks no-trig
+			set_property ro.iio.accel.order 102
+			;&
 		*LINX1010B*)
 			set_property ro.iio.accel.x.opt_scale -1
 			set_property ro.iio.accel.z.opt_scale -1
@@ -492,6 +497,9 @@ function do_bootcomplete()
 			setkeycodes 0x66 172
 			setkeycodes 0x6b 127
 			;;
+		Surface*Go)
+			echo on > /sys/devices/pci0000:00/0000:00:15.1/i2c_designware.1/power/control
+			;;
 		VMware*)
 			pm disable com.android.bluetooth
 			;;
@@ -519,7 +527,7 @@ function do_bootcomplete()
 			alsa_amixer -c $c set Speaker 100%
 			alsa_amixer -c $c set Capture 80%
 			alsa_amixer -c $c set Capture cap
-			alsa_amixer -c $c set PCM 100 unmute
+			alsa_amixer -c $c set PCM 100% unmute
 			alsa_amixer -c $c set SPO unmute
 			alsa_amixer -c $c set IEC958 on
 			alsa_amixer -c $c set 'Mic Boost' 1

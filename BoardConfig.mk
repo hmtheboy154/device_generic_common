@@ -107,8 +107,6 @@ ifneq ($(strip $(BOARD_GPU_DRIVERS)),)
 TARGET_HARDWARE_3D := true
 endif
 
-
-
 BOARD_KERNEL_CMDLINE := root=/dev/ram0 androidboot.selinux=permissive androidboot.hardware=$(TARGET_PRODUCT) $(if $(filter x86_64,$(TARGET_ARCH) $(TARGET_KERNEL_ARCH)),,vmalloc=192M)
 TARGET_KERNEL_DIFFCONFIG := device/generic/common/selinux_diffconfig
 
@@ -125,6 +123,14 @@ SELINUX_IGNORE_NEVERALLOWS := true
 # DEVICE_MATRIX_FILE := device/generic/common/compatibility_matrix.xml
 
 BOARD_PLAT_PRIVATE_SEPOLICY_DIR := device/generic/common/sepolicy/plat_private
+
+BOARD_USES_MINIGBM := true
+BOARD_USES_MINIGBM_INTEL := true
+BOARD_USES_GRALLOC1 := true
+BOARD_USES_IA_HWCOMPOSER := true
+TARGET_USES_HWC2 ?= true
+#BOARD_USES_VULKAN := true
+
 
 # Bliss optimizations
 WITH_BLISS_CHARGER := false
