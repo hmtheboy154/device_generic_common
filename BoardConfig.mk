@@ -131,6 +131,8 @@ BOARD_USES_IA_HWCOMPOSER := true
 TARGET_USES_HWC2 ?= true
 #BOARD_USES_VULKAN := true
 
+# Include support for ARM on x86 native bridge
+-include vendor/google/chromeos-x86/board/native_bridge_arm_on_x86.mk
 
 # Bliss optimizations
 WITH_BLISS_CHARGER := false
