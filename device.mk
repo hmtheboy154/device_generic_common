@@ -324,17 +324,4 @@ $(call inherit-product,$(if $(wildcard $(PRODUCT_DIR)packages.mk),$(PRODUCT_DIR)
 # $(call inherit-product-if-exists,vendor/bliss_priv/device-vendor.mk)
 $(call inherit-product-if-exists,vendor/boringdroid/boringdroid.mk)
 
-# Get proprietary files if any exists
-$(call inherit-product, vendor/google/chromeos-x86/target/houdini.mk)
-$(call inherit-product, vendor/google/chromeos-x86/target/native_bridge_arm_on_x86.mk)
-
-HOUDINI_PATH := vendor/google/chromeos-x86/proprietary/houdini
-
-PRODUCT_COPY_FILES += \
-    $(call find-copy-subdir-files,*,$(HOUDINI_PATH),$(TARGET_COPY_OUT_SYSTEM))
-    
-PRODUCT_BUILD_PROP_OVERRIDES += TARGET_CPU_ABI2=
-
-# Get proprietary files if any exists
-$(call inherit-product, vendor/google/chromeos-x86/target/widevine.mk)
 
