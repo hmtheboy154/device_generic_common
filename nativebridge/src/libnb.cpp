@@ -12,12 +12,18 @@
  */
 
 #define LOG_TAG "libnb"
-#define LOG_NDEBUG 1
 
 #include <dlfcn.h>
 #include <cutils/log.h>
 #include <cutils/properties.h>
 #include "nativebridge/native_bridge.h"
+
+#define DBG 0
+#if DBG
+#define LOGV ALOGD
+#else
+#define LOGV ALOGV
+#endif
 
 namespace android {
 
@@ -41,7 +47,7 @@ static NativeBridgeCallbacks *get_callbacks()
         if (!native_handle) {
             native_handle = dlopen(libnb, RTLD_LAZY);
             if (!native_handle) {
-                ALOGE("Unable to open %s: %s", libnb, dlerror());
+                ALOGE("Unable to open %s", libnb);
                 return nullptr;
             }
         }
@@ -56,7 +62,7 @@ static bool native_bridge2_initialize(const NativeBridgeRuntimeCallbacks *art_cb
                                       const char *app_code_cache_dir,
                                       const char *isa)
 {
-    ALOGV("enter native_bridge2_initialize %s %s", app_code_cache_dir, isa);
+    LOGV("enter native_bridge2_initialize %s %s", app_code_cache_dir, isa);
     if (is_native_bridge_enabled()) {
         if (NativeBridgeCallbacks *cb = get_callbacks()) {
             return cb->initialize(art_cbs, app_code_cache_dir, isa);
@@ -70,7 +76,7 @@ static bool native_bridge2_initialize(const NativeBridgeRuntimeCallbacks *art_cb
 
 static void *native_bridge2_loadLibrary(const char *libpath, int flag)
 {
-    ALOGV("enter native_bridge2_loadLibrary %s", libpath);
+    LOGV("enter native_bridge2_loadLibrary %s", libpath);
     NativeBridgeCallbacks *cb = get_callbacks();
     return cb ? cb->loadLibrary(libpath, flag) : nullptr;
 }
@@ -78,21 +84,21 @@ static void *native_bridge2_loadLibrary(const char *libpath, int flag)
 static void *native_bridge2_getTrampoline(void *handle, const char *name,
                                           const char* shorty, uint32_t len)
 {
-    ALOGV("enter native_bridge2_getTrampoline %s", name);
+    LOGV("enter native_bridge2_getTrampoline %s", name);
     NativeBridgeCallbacks *cb = get_callbacks();
     return cb ? cb->getTrampoline(handle, name, shorty, len) : nullptr;
 }
 
 static bool native_bridge2_isSupported(const char *libpath)
 {
-    ALOGV("enter native_bridge2_isSupported %s", libpath);
+    LOGV("enter native_bridge2_isSupported %s", libpath);
     NativeBridgeCallbacks *cb = get_callbacks();
     return cb ? cb->isSupported(libpath) : false;
 }
 
 static const struct NativeBridgeRuntimeValues *native_bridge2_getAppEnv(const char *abi)
 {
-    ALOGV("enter native_bridge2_getAppEnv %s", abi);
+    LOGV("enter native_bridge2_getAppEnv %s", abi);
     NativeBridgeCallbacks *cb = get_callbacks();
     return cb ? cb->getAppEnv(abi) : nullptr;
 }
@@ -100,7 +106,7 @@ static const struct NativeBridgeRuntimeValues *native_bridge2_getAppEnv(const ch
 static bool native_bridge2_isCompatibleWith(uint32_t version)
 {
     static uint32_t my_version = 0;
-    ALOGV("enter native_bridge2_isCompatibleWith %u", version);
+    LOGV("enter native_bridge2_isCompatibleWith %u", version);
     if (my_version == 0 && is_native_bridge_enabled()) {
         if (NativeBridgeCallbacks *cb = get_callbacks()) {
             my_version = cb->version;
@@ -113,28 +119,28 @@ static bool native_bridge2_isCompatibleWith(uint32_t version)
 
 static NativeBridgeSignalHandlerFn native_bridge2_getSignalHandler(int signal)
 {
-    ALOGV("enter native_bridge2_getSignalHandler %d", signal);
+    LOGV("enter native_bridge2_getSignalHandler %d", signal);
     NativeBridgeCallbacks *cb = get_callbacks();
     return cb ? cb->getSignalHandler(signal) : nullptr;
 }
 
 static int native_bridge3_unloadLibrary(void *handle)
 {
-    ALOGV("enter native_bridge3_unloadLibrary %p", handle);
+    LOGV("enter native_bridge3_unloadLibrary %p", handle);
     NativeBridgeCallbacks *cb = get_callbacks();
     return cb ? cb->unloadLibrary(handle) : -1;
 }
 
 static const char *native_bridge3_getError()
 {
-    ALOGV("enter native_bridge3_getError");
+    LOGV("enter native_bridge3_getError");
     NativeBridgeCallbacks *cb = get_callbacks();
     return cb ? cb->getError() : "unknown";
 }
 
 static bool native_bridge3_isPathSupported(const char *path)
 {
-    ALOGV("enter native_bridge3_isPathSupported %s", path);
+    LOGV("enter native_bridge3_isPathSupported %s", path);
     NativeBridgeCallbacks *cb = get_callbacks();
     return cb && cb->isPathSupported(path);
 }
@@ -142,7 +148,7 @@ static bool native_bridge3_isPathSupported(const char *path)
 static bool native_bridge3_initAnonymousNamespace(const char *public_ns_sonames,
                                                   const char *anon_ns_library_path)
 {
-    ALOGV("enter native_bridge3_initAnonymousNamespace %s, %s", public_ns_sonames, anon_ns_library_path);
+    LOGV("enter native_bridge3_initAnonymousNamespace %s, %s", public_ns_sonames, anon_ns_library_path);
     NativeBridgeCallbacks *cb = get_callbacks();
     return cb && cb->initAnonymousNamespace(public_ns_sonames, anon_ns_library_path);
 }
@@ -155,7 +161,7 @@ native_bridge3_createNamespace(const char *name,
                                const char *permitted_when_isolated_path,
                                native_bridge_namespace_t *parent_ns)
 {
-    ALOGV("enter native_bridge3_createNamespace %s, %s, %s, %s", name, ld_library_path, default_library_path, permitted_when_isolated_path);
+    LOGV("enter native_bridge3_createNamespace %s, %s, %s, %s", name, ld_library_path, default_library_path, permitted_when_isolated_path);
     NativeBridgeCallbacks *cb = get_callbacks();
     return cb ? cb->createNamespace(name, ld_library_path, default_library_path, type, permitted_when_isolated_path, parent_ns) : nullptr;
 }
@@ -164,7 +170,7 @@ static bool native_bridge3_linkNamespaces(native_bridge_namespace_t *from,
                                           native_bridge_namespace_t *to,
                                           const char *shared_libs_soname)
 {
-    ALOGV("enter native_bridge3_linkNamespaces %s", shared_libs_soname);
+    LOGV("enter native_bridge3_linkNamespaces %s", shared_libs_soname);
     NativeBridgeCallbacks *cb = get_callbacks();
     return cb && cb->linkNamespaces(from, to, shared_libs_soname);
 }
@@ -173,17 +179,17 @@ static void *native_bridge3_loadLibraryExt(const char *libpath,
                                            int flag,
                                            native_bridge_namespace_t *ns)
 {
-    ALOGV("enter native_bridge3_loadLibraryExt %s, %d, %p", libpath, flag, ns);
+    LOGV("enter native_bridge3_loadLibraryExt %s, %d, %p", libpath, flag, ns);
     NativeBridgeCallbacks *cb = get_callbacks();
     void *result = cb ? cb->loadLibraryExt(libpath, flag, ns) : nullptr;
 //  void *result = cb ? cb->loadLibrary(libpath, flag) : nullptr;
-    ALOGV("native_bridge3_loadLibraryExt: %p", result);
+    LOGV("native_bridge3_loadLibraryExt: %p", result);
     return result;
 }
 
 static native_bridge_namespace_t *native_bridge4_getVendorNamespace()
 {
-    ALOGV("enter native_bridge4_getVendorNamespace");
+    LOGV("enter native_bridge4_getVendorNamespace");
     NativeBridgeCallbacks *cb = get_callbacks();
     return cb ? cb->getVendorNamespace() : nullptr;
 }
