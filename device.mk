@@ -294,5 +294,6 @@ $(call inherit-product,$(if $(wildcard $(PRODUCT_DIR)packages.mk),$(PRODUCT_DIR)
 
 # Get proprietary files if any exists
 # $(call inherit-product-if-exists,vendor/bliss_priv/device-vendor.mk)
+$(call inherit-product-if-exists,vendor/boringdroid/boringdroid.mk)
 
 
