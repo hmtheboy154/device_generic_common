@@ -129,6 +129,9 @@ function init_hal_bluetooth()
 function init_hal_camera()
 {
 	case "$UEVENT" in
+		*81EK*)
+			set_prop_if_empty hal.camera.0 0,0
+			;;
 		*e-tabPro*)
 			set_prop_if_empty hal.camera.0 0,270
 			set_prop_if_empty hal.camera.2 1,90
@@ -387,7 +390,7 @@ function init_tscal()
 		*ST70416-6*)
 			modprobe gslx680_ts_acpi
 			;&
-		*T91*|*T101*|*ET2002*|*74499FU*|*945GSE-ITE8712*|*CF-19[CDYFGKLP]*|*TECLAST:rntPAD*)
+		*81EK*|*T91**|*T101*|*ET2002*|*74499FU*|*945GSE-ITE8712*|*CF-19[CDYFGKLP]*|*TECLAST:rntPAD*)
 			create_pointercal
 			return
 			;;
