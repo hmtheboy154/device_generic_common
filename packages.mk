@@ -101,4 +101,5 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     TSCalibration2 \
     Superuser \
-    nano
+    nano \
+    BoringdroidSystemUI
