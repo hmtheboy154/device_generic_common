@@ -130,7 +130,7 @@ PRODUCT_PROPERTY_OVERRIDES := \
     ro.com.android.dataroaming=true \
     media.sf.hwaccel=1 \
     media.sf.omx-plugin=libffmpeg_omx.so \
-    media.sf.extractor-plugin=libffmpeg_extractor.so
+    media.sf.extractor-plugin=libffmpeg_extractor.so 
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.mot.deep.sleep.supported=true
@@ -155,6 +155,14 @@ PRODUCT_PRODUCT_PROPERTIES += \
 PRODUCT_PROPERTY_OVERRIDES += \
    ro.recents.grid=true
 
+# Navbar Plugin
+PRODUCT_PROPERTY_OVERRIDES += \
+   persist.sys.systemuiplugin.enabled=true
+
+# Use an x86 compatible mode for deep sleep
+PRODUCT_PROPERTY_OVERRIDES += \
+   ro.mot.deep.sleep.supported=true
+
 PRODUCT_COPY_FILES := \
     $(if $(wildcard $(PRODUCT_DIR)init.rc),$(PRODUCT_DIR)init.rc:root/init.rc) \
     $(if $(wildcard $(PRODUCT_DIR)init.sh),$(PRODUCT_DIR),$(LOCAL_PATH)/)init.sh:system/etc/init.sh \
@@ -169,7 +177,6 @@ PRODUCT_COPY_FILES := \
     $(if $(wildcard vendor/bliss/prebuilt/common/etc/init.blissupdater.rc),vendor/bliss/prebuilt/common/etc/init.blissupdater.rc:system/etc/init/init.blissupdater.rc) \
     
     #$(if $(wildcard vendor/ax86/houdini/houdini9_y.sfs),vendor/ax86/houdini/houdini9_y.sfs:system/etc/houdini9_y.sfs)
-
 
 $(foreach f,$(wildcard vendor/bliss/prebuilt/common/etc/init/*.rc),\
 $(eval PRODUCT_COPY_FILES += $(f):system/etc/init/$(notdir $f)))
