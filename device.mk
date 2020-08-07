@@ -150,15 +150,17 @@ PRODUCT_PRODUCT_PROPERTIES += \
 
 # Recents
 PRODUCT_PROPERTY_OVERRIDES += \
-   ro.recents.grid=true
+    ro.recents.grid=true
 
-# Navbar Plugin
+# Boringdroid Navbar Plugin
 PRODUCT_PROPERTY_OVERRIDES += \
-   persist.sys.systemuiplugin.enabled=true
+    persist.sys.systemuiplugin.enabled=true \
+    persist.sys.pcmode.enabled=true \
+    persist.sys.bd.tunerkeys=sysui_nav_bar--sysui_nav_bar_left--sysui_nav_bar_right\
 
 # Use an x86 compatible mode for deep sleep
 PRODUCT_PROPERTY_OVERRIDES += \
-   ro.mot.deep.sleep.supported=true
+    ro.mot.deep.sleep.supported=true
 
 PRODUCT_COPY_FILES := \
     $(if $(wildcard $(PRODUCT_DIR)init.rc),$(PRODUCT_DIR)init.rc:root/init.rc) \
