@@ -243,11 +243,6 @@ PRODUCT_COPY_FILES += \
 #     media.amplayer.widevineenable=true
 
 
-# Gearlock 
-PRODUCT_COPY_FILES += \
-    vendor/gearlock/gearlock:gearlock
-
-
 PRODUCT_TAGS += dalvik.gc.type-precise
 
 PRODUCT_CHARACTERISTICS := tablet
