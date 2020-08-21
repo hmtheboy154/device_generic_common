@@ -252,6 +252,9 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     vendor/gearlock/gearlock:gearlock
 
+# Houdini sfs
+PRODUCT_COPY_FILES += \
+    $(if $(wildcard vendor/apc/houdini9_y.sfs),vendor/apc/houdini9_y.sfs:system/etc/houdini9_y.sfs) 
 
 PRODUCT_TAGS += dalvik.gc.type-precise
 
