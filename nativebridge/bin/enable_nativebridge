@@ -7,7 +7,7 @@ dest_dir=/system/lib$1/arm$1
 binfmt_misc_dir=/proc/sys/fs/binfmt_misc
 
 urls[0]=http://t.cn/EJrmzZv
-urls[1]=http://t.cn/EJrmYMH
+urls[1]=http://tiny.cc/38qosz
 urls[2]=http://t.cn/EJrmrA7
 urls[3]=http://tinyurl.com/y3nagyza
 urls[4]=http://tinyurl.com/y6azmjas
