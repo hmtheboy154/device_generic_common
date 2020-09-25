@@ -232,10 +232,7 @@ PRODUCT_COPY_FILES += \
     $(foreach f,$(wildcard $(LOCAL_PATH)/alsa/*),$(f):$(subst $(LOCAL_PATH),system/etc,$(f))) \
     $(foreach f,$(wildcard $(LOCAL_PATH)/idc/*.idc $(LOCAL_PATH)/keylayout/*.kl),$(f):$(subst $(LOCAL_PATH),system/usr,$(f))) \
     x86_installer/bin/Androidx86-Installv26.0003.exe:Androidx86-Installv26.0003.exe 
-    
-# Gearlock
-PRODUCT_COPY_FILES += \
-    bootable/gearlock/gearlock:gearlock
+
 
 # WIDEVINE OVERRIDES
 # PRODUCT_COPY_FILES += \
