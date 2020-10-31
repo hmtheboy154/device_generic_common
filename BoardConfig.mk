@@ -76,7 +76,14 @@ BUILD_EMULATOR_GPS_MODULE ?= false
 BUILD_EMULATOR_LIGHTS_MODULE ?= false
 BUILD_EMULATOR_SENSORS_MODULE ?= false
 
+# Separate NativeBridge ABIs
+NATIVEBRIDGE_ARM_ABI := true
+NATIVEBRIDGE_ARM64_ABI := true
+
 BUILD_ARM_FOR_X86 := $(WITH_NATIVE_BRIDGE)
+
+# Include support for ARM on x86 native bridge
+-include vendor/google/chromeos-x86/board/native_bridge_arm_on_x86.mk
 
 BOARD_USE_LIBVA_INTEL_DRIVER := true
 BOARD_USE_LIBVA := true
@@ -117,7 +124,8 @@ ZIP_OPTIMIZATION_NO_INTEGRITY := true
 DEVICE_MANIFEST_FILE := device/generic/common/manifest.xml
 
 BOARD_SEPOLICY_DIRS += device/generic/common/sepolicy/nonplat \
-                       system/bt/vendor_libs/linux/sepolicy \
+                       system/bt/vendor_libs/linux/sepolicy
+
 SELINUX_IGNORE_NEVERALLOWS := true
 # Vendor Interface Manifest
 # DEVICE_MATRIX_FILE := device/generic/common/compatibility_matrix.xml
@@ -130,9 +138,6 @@ BOARD_USES_GRALLOC1 := true
 BOARD_USES_IA_HWCOMPOSER := true
 TARGET_USES_HWC2 ?= true
 #BOARD_USES_VULKAN := true
-
-# Include support for ARM on x86 native bridge
--include vendor/google/chromeos-x86/board/native_bridge_arm_on_x86.mk
 
 # Bliss optimizations
 WITH_BLISS_CHARGER := false
