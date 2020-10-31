@@ -82,4 +82,6 @@ else
 	log -pi -thoudini "houdini$1 enabled"
 fi
 
+[ "$(getprop ro.zygote)" = "zygote64_32" -a -z "$1" ] && exec $0 64
+
 exit 0
