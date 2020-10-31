@@ -183,6 +183,22 @@ function init_uvesafb()
 function init_hal_gralloc()
 {
 	[ "$VULKAN" = "1" ] && GRALLOC=gbm
+	
+	case "$(cat /proc/fb | head -1)" in
+		0*amdgpudrmfb)
+			modprobe amdgpu
+			;;
+		0*radeondrmfb)
+			modprobe radeon
+			;;
+		0*nouveau*)
+			modprobe nouveau
+			;;
+		"")
+			;;
+		0*)
+			;;
+	esac
 
 	case "$(cat /proc/fb | head -1)" in
 		*virtio*drmfb|*DRM*emulated)
@@ -331,10 +347,10 @@ function init_hal_sensors()
 			set_property ro.iio.accel.x.opt_scale -1
 			set_property ro.iio.accel.z.opt_scale -1
 			;;
-		*i7-WN*)
+		*i7-WN*|*SP111-33*)
 			set_property ro.iio.accel.quirks no-trig
 			;&
-		*i7Stylus*)
+		*i7Stylus*|*M80TA*)
 			set_property ro.iio.accel.x.opt_scale -1
 			;;
 		*LenovoMIIX320*|*ONDATablet*)
@@ -345,9 +361,6 @@ function init_hal_sensors()
 		*Venue*8*Pro*3845*)
 			set_property ro.iio.accel.order 102
 			;;
-		*SP111-33*)
-			set_property ro.iio.accel.quirks no-trig
-			;&
 		*ST70416-6*)
 			set_property ro.iio.accel.order 102
 			;;
@@ -356,6 +369,11 @@ function init_hal_sensors()
 			;&
 		*T*0*TA*|*M80TA*)
 			set_property ro.iio.accel.y.opt_scale -1
+			;;
+		*SwitchSA5-271*|*SwitchSA5-271P*)
+			set_property ro.ignore_atkbd 1
+			has_sensors=true
+			hal_sensors=iio
 			;;
 		*)
 			has_sensors=false
