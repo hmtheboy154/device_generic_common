@@ -31,7 +31,16 @@ PRODUCT_PROPERTY_OVERRIDES := \
     ro.hardware.vulkan.level = 1 \
     ro.hardware.vulkan.version = 4194307
 
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.vulkan.level-1.xml:system/etc/permissions/android.hardware.vulkan.level.xml \
-    frameworks/native/data/etc/android.hardware.vulkan.version-1_1.xml:system/etc/permissions/android.hardware.vulkan.version.xml \
-    external/libdrm/data/amdgpu.ids:system/vendor/etc/hwdata/amdgpu.ids
+ifdef AX86_VULKAN_COMPUTE
+	PRODUCT_COPY_FILES += \
+		frameworks/native/data/etc/android.hardware.vulkan.compute-0.xml:system/etc/permissions/android.hardware.vulkan.compute.xml \
+		frameworks/native/data/etc/android.hardware.vulkan.level-1.xml:system/etc/permissions/android.hardware.vulkan.level.xml \
+		frameworks/native/data/etc/android.hardware.vulkan.version-1_1.xml:system/etc/permissions/android.hardware.vulkan.version.xml \
+		external/libdrm/data/amdgpu.ids:system/vendor/etc/hwdata/amdgpu.ids
+else
+    PRODUCT_COPY_FILES += \
+		frameworks/native/data/etc/android.hardware.vulkan.level-1.xml:system/etc/permissions/android.hardware.vulkan.level.xml \
+		frameworks/native/data/etc/android.hardware.vulkan.version-1_1.xml:system/etc/permissions/android.hardware.vulkan.version.xml \
+		external/libdrm/data/amdgpu.ids:system/vendor/etc/hwdata/amdgpu.ids
+endif
+	
