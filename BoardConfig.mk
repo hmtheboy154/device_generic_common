@@ -77,6 +77,12 @@ BUILD_EMULATOR_GPS_MODULE ?= false
 BUILD_EMULATOR_LIGHTS_MODULE ?= false
 BUILD_EMULATOR_SENSORS_MODULE ?= false
 
+ifneq ("$(wildcard vendor/intel/houdini/*)","")
+	HOUDINI_PREINSTALL := intel
+	ENABLE_UNITY_REPLACEMENT := true
+	#~ -include vendor/intel/houdini/BoardConfig.mk
+endif
+	
 BUILD_ARM_FOR_X86 := $(WITH_NATIVE_BRIDGE)
 
 BOARD_USE_LIBVA_INTEL_DRIVER := true

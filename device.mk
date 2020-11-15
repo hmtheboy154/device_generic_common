@@ -323,4 +323,20 @@ $(call inherit-product,$(if $(wildcard $(PRODUCT_DIR)packages.mk),$(PRODUCT_DIR)
 # $(call inherit-product-if-exists,vendor/bliss_priv/device-vendor.mk)
 $(call inherit-product-if-exists,vendor/boringdroid/boringdroid.mk)
 
+# Widevine from ChromeOS
+$(call inherit-product-if-exists, vendor/google/chromeos-x86/target/widevine.mk)
+
+ifneq ("$(wildcard vendor/intel/houdini/*)","")
+$(foreach f,$(wildcard vendor/google/chromeos-x86/proprietary/houdini/etc/binfmt_misc/*),\
+	$(eval PRODUCT_COPY_FILES += $(f):$(PRODUCT_OUT)/system/etc/binfmt_misc/$(notdir $f)))
+$(foreach f,$(wildcard vendor/google/chromeos-x86/proprietary/houdini/etc/binfmt_misc/*),\
+	$(eval PRODUCT_COPY_FILES += $(f):$(PRODUCT_OUT)/system/vendor/etc/binfmt_misc/$(notdir $f)))
+$(foreach f,$(wildcard vendor/google/chromeos-x86/proprietary/houdini/etc/init/*),\
+	$(eval PRODUCT_COPY_FILES += $(f):$(PRODUCT_OUT)/system/etc/init/$(notdir $f)))
+$(foreach f,$(wildcard vendor/google/chromeos-x86/proprietary/houdini/etc/init/*),\
+	$(eval PRODUCT_COPY_FILES += $(f):$(PRODUCT_OUT)/system/vendor/etc/init/$(notdir $f)))
+else
+    $(call inherit-product, vendor/google/chromeos-x86/target/houdini.mk)
+	$(call inherit-product, vendor/google/chromeos-x86/target/native_bridge_arm_on_x86.mk)
+endif
 

@@ -19,9 +19,14 @@ LOCAL_CPPFLAGS := -std=c++11
 LOCAL_SHARED_LIBRARIES := libcutils libdl liblog
 LOCAL_C_INCLUDES := system/core/libnativebridge/include
 LOCAL_MULTILIB := both
-LOCAL_POST_INSTALL_CMD := $(hide) \
-    rm -rf $(TARGET_OUT)/*/{arm*,*houdini*} {$(TARGET_OUT),$(PRODUCT_OUT)}/vendor/{*/arm*,*/*houdini*}; \
-    mkdir -p $(TARGET_OUT)/{lib/arm,$(if $(filter true,$(TARGET_IS_64_BIT)),lib64/arm64)}; \
-    touch $(TARGET_OUT)/lib/libhoudini.so $(if $(filter true,$(TARGET_IS_64_BIT)),$(TARGET_OUT)/lib64/libhoudini.so)
+ifneq ("$(wildcard vendor/google/chromeos-x86/*)","")
+	include $(BUILD_SHARED_LIBRARY)
+else
+	LOCAL_POST_INSTALL_CMD := $(hide) \
+	    rm -rf $(TARGET_OUT)/*/{arm*,*houdini*} {$(TARGET_OUT),$(PRODUCT_OUT)}/vendor/{*/arm*,*/*houdini*}; \
+	    mkdir -p $(TARGET_OUT)/{lib/arm,$(if $(filter true,$(TARGET_IS_64_BIT)),lib64/arm64)}; \
+	    touch $(TARGET_OUT)/lib/libhoudini.so $(if $(filter true,$(TARGET_IS_64_BIT)),$(TARGET_OUT)/lib64/libhoudini.so)
 
-include $(BUILD_SHARED_LIBRARY)
+	include $(BUILD_SHARED_LIBRARY)
+endif
+
