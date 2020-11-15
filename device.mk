@@ -105,12 +105,12 @@ PRODUCT_PACKAGES += \
 	PlayGames \
 	Vending \
 	GoogleLoginService \
-    
+
 endif
 
 ifeq ($(USE_MAGISK),true)
 $(call inherit-product, vendor/magisk/magisk.mk)
-    
+
 endif
 
 #PRODUCT_PROPERTY_OVERRIDES := \
@@ -130,7 +130,7 @@ PRODUCT_PROPERTY_OVERRIDES := \
     ro.com.android.dataroaming=true \
     media.sf.hwaccel=1 \
     media.sf.omx-plugin=libffmpeg_omx.so \
-    media.sf.extractor-plugin=libffmpeg_extractor.so 
+    media.sf.extractor-plugin=libffmpeg_extractor.so
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES := \
     ro.arch=x86 \
@@ -173,9 +173,7 @@ PRODUCT_COPY_FILES := \
     $(if $(wildcard $(PRODUCT_DIR)init.$(TARGET_PRODUCT).rc),$(PRODUCT_DIR)init.$(TARGET_PRODUCT).rc,$(LOCAL_PATH)/init.x86.rc):root/init.$(TARGET_PRODUCT).rc \
     $(if $(wildcard $(PRODUCT_DIR)ueventd.$(TARGET_PRODUCT).rc),$(PRODUCT_DIR)ueventd.$(TARGET_PRODUCT).rc,$(LOCAL_PATH)/ueventd.x86.rc):root/ueventd.$(TARGET_PRODUCT).rc \
     $(if $(wildcard vendor/bliss/prebuilt/common/etc/init.bliss.rc),vendor/bliss/prebuilt/common/etc/init.bliss.rc:root/init.bliss.rc) \
-    $(if $(wildcard vendor/bliss/prebuilt/common/etc/init.blissupdater.rc),vendor/bliss/prebuilt/common/etc/init.blissupdater.rc:system/etc/init/init.blissupdater.rc) \
-    
-    #$(if $(wildcard vendor/ax86/houdini/houdini9_y.sfs),vendor/ax86/houdini/houdini9_y.sfs:system/etc/houdini9_y.sfs)
+    $(if $(wildcard vendor/bliss/prebuilt/common/etc/init.blissupdater.rc),vendor/bliss/prebuilt/common/etc/init.blissupdater.rc:system/etc/init/init.blissupdater.rc)
 
 $(foreach f,$(wildcard vendor/bliss/prebuilt/common/etc/init/*.rc),\
 $(eval PRODUCT_COPY_FILES += $(f):system/etc/init/$(notdir $f)))
@@ -232,7 +230,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.webview.xml:system/etc/permissions/android.software.webview.xml \
     $(foreach f,$(wildcard $(LOCAL_PATH)/alsa/*),$(f):$(subst $(LOCAL_PATH),system/etc,$(f))) \
     $(foreach f,$(wildcard $(LOCAL_PATH)/idc/*.idc $(LOCAL_PATH)/keylayout/*.kl),$(f):$(subst $(LOCAL_PATH),system/usr,$(f))) \
-    x86_installer/bin/Androidx86-Installv26.0003.exe:Androidx86-Installv26.0003.exe 
+    x86_installer/bin/Androidx86-Installv26.0003.exe:Androidx86-Installv26.0003.exe
 
 
 # WIDEVINE OVERRIDES

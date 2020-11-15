@@ -119,6 +119,7 @@ DEVICE_MANIFEST_FILE := device/generic/common/manifest.xml
 
 BOARD_SEPOLICY_DIRS += device/generic/common/sepolicy/nonplat \
                        system/bt/vendor_libs/linux/sepolicy \
+
 SELINUX_IGNORE_NEVERALLOWS := true
 # Vendor Interface Manifest
 # DEVICE_MATRIX_FILE := device/generic/common/compatibility_matrix.xml
@@ -131,7 +132,6 @@ BOARD_USES_GRALLOC1 := true
 BOARD_USES_IA_HWCOMPOSER := true
 TARGET_USES_HWC2 ?= true
 #BOARD_USES_VULKAN := true
-
 
 # Bliss optimizations
 WITH_BLISS_CHARGER := false
