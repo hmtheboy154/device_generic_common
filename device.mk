@@ -331,6 +331,6 @@ $(foreach f,$(wildcard vendor/google/chromeos-x86/proprietary/houdini/etc/init/*
 	$(eval PRODUCT_COPY_FILES += $(f):$(PRODUCT_OUT)/system/vendor/etc/init/$(notdir $f)))
 else
     $(call inherit-product, vendor/google/chromeos-x86/target/houdini.mk)
-	$(call inherit-product, vendor/google/chromeos-x86/target/native_bridge_arm_on_x86.mk)
+    $(call inherit-product, vendor/google/chromeos-x86/target/native_bridge_arm_on_x86.mk)
 endif
 
