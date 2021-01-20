@@ -18,6 +18,7 @@ endif
 # Native Bridge ABI List
 NATIVE_BRIDGE_ABI_LIST_32_BIT := armeabi-v7a
 NATIVE_BRIDGE_ABI_LIST_64_BIT := arm64-v8a
+NATIVE_BRIDGE_ABI_LIST := x86_64 x86 arm64-v8a armeabi-v7a armeabi
 
 LOCAL_SRC_FILES := bin/enable_nativebridge
 
