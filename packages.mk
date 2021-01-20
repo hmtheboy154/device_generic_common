@@ -105,3 +105,10 @@ PRODUCT_PACKAGES += \
     BoringdroidSystemUI \
     com.boringdroid.systemui \
     boringLibSharedSystemUI
+
+PRODUCT_PACKAGES += houdini \
+	houdini64 \
+	libhoudini \
+	houdini_x \
+	houdini_y \
+	houdini_z
