@@ -71,6 +71,11 @@ function init_hal_audio()
 			set_prop_if_empty hal.audio.out pcmC0D2p
 			;;
 	esac
+	case "$BOARD" in
+		NUC5CPYB)
+			set_prop_if_empty hal.audio.out pcmC0D3p
+			;;
+	esac
 }
 
 function init_hal_bluetooth()
