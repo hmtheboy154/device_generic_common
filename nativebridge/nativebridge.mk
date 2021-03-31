@@ -35,10 +35,20 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.dalvik.vm.isa.arm64=x86_64 \
     ro.enable.native.bridge.exec64=1
 
-ifneq ($(HOUDINI_PREINSTALL),intel)
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES := ro.dalvik.vm.native.bridge=libnb.so
 
+ifneq ($(HOUDINI_PREINSTALL),intel)
+
+ifneq ("$(wildcard vendor/google/chromeos-x86/proprietary/*)","")
+
+	PRODUCT_DEFAULT_PROPERTY_OVERRIDES := ro.dalvik.vm.native.bridge=libhoudini.so
+	
+else
+
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES := ro.dalvik.vm.native.bridge=libnb.so
 PRODUCT_PACKAGES := libnb
+
+endif
+
 endif
 
 $(call inherit-product-if-exists,vendor/intel/houdini/houdini.mk)
