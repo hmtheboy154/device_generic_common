@@ -77,7 +77,9 @@ else
 ifeq ($(TARGET_KERNEL_ARCH),x86_64)
 ifeq ($(HOST_OS),darwin)
 KERNEL_CROSS_COMPILE ?= $(abspath prebuilts/gcc/darwin-x86/host/i686-apple-darwin-4.2.1/bin)/i686-apple-darwin11-
-else
+else ifeq ($(NO_KERNEL_CROSS_COMPILE),true)
+KERNEL_CROSS_COMPILE ?= 
+else 
 KERNEL_CROSS_COMPILE ?= $(abspath prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.11-4.6/bin)/x86_64-linux-
 endif
 else
