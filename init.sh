@@ -25,8 +25,9 @@ function rmmod_if_exist()
 function init_misc()
 {
 	# device information
-	setprop ro.product.manufacturer "$(cat $DMIPATH/sys_vendor)"
-	setprop ro.product.model "$PRODUCT"
+	VENDOR=$(cat $DMIPATH/sys_vendor)
+	if [ -z "$VENDOR" ]; then setprop ro.product.manufacturer "$(cat $DMIPATH/board_vendor)"; else setprop ro.product.manufacturer "$VENDOR"; fi
+	if [ -z "$PRODUCT" ]; then setprop ro.product.model "$BOARD"; else setprop ro.product.model "$PRODUCT"; fi
 
 	# a hack for USB modem
 	lsusb | grep 1a8d:1000 && eject
@@ -70,11 +71,12 @@ function init_hal_audio()
 			set_prop_if_empty hal.audio.out pcmC0D2p
 			;;
 	esac
-	case "$BOARD" in
-		NUC5CPYB)
-			set_prop_if_empty hal.audio.out pcmC0D3p
-			;;
-	esac
+	
+	# choose the first connected HDMI port on card 0 or 1
+	pcm=$(alsa_ctl store -f - 0 2>/dev/null| grep "CARD" -A 2 | grep "value true" -B 1 | grep "HDMI.*pcm" | head -1 | sed -e's/.*pcm=\([0-9]*\).*/\1/')
+	[ -z "${pcm##*[!0-9]*}" ] || set_prop_if_empty hal.audio.out "pcmC0D${pcm}p"
+	pcm=$(alsa_ctl store -f - 1 2>/dev/null| grep "CARD" -A 2 | grep "value true" -B 1 | grep "HDMI.*pcm" | head -1 | sed -e's/.*pcm=\([0-9]*\).*/\1/')
+	[ -z "${pcm##*[!0-9]*}" ] || set_prop_if_empty hal.audio.out "pcmC1D${pcm}p"
 }
 
 function init_hal_bluetooth()
