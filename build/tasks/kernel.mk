@@ -70,21 +70,33 @@ TARGET_KERNEL_CONFIG ?= goldfish_defconfig
 KERNEL_CONFIG_DIR := arch/arm/configs
 endif
 
+# Grab current kernel version information
+ROM_FOLDER_LOCATION := $(abspath $(PWD))
+KERNEL_MAKEFILE_LOCATION := "$(ROM_FOLDER_LOCATION)/kernel/Makefile"
+VERSION := $(shell grep -m 1 VERSION $(KERNEL_MAKEFILE_LOCATION) | sed 's/^.*= //g')
+PATCHLEVEL := $(shell grep -m 1 PATCHLEVEL $(KERNEL_MAKEFILE_LOCATION) | sed 's/^.*= //g')
+SUBLEVEL := $(shell grep -m 1 SUBLEVEL $(KERNEL_MAKEFILE_LOCATION) | sed 's/^.*= //g')
+
 ifeq ($(BUILD_KERNEL_WITH_CLANG),true)
 KERNEL_CROSS_COMPILE := x86_64-linux-androidkernel-
-KERNEL_CLANG_CLAGS := CC=clang HOSTCC=clang CLANG_TRIPLE=x86_64-linux-gnu- PATH=$(abspath $(LLVM_PREBUILTS_BASE)/$(BUILD_OS)-x86/$(LLVM_PREBUILTS_VERSION)/bin):$$PATH
-else
-ifeq ($(TARGET_KERNEL_ARCH),x86_64)
+KERNEL_CLANG_CLAGS += CC=clang HOSTCC=clang CLANG_TRIPLE=x86_64-linux-gnu- PATH=$(abspath $(LLVM_PREBUILTS_BASE)/$(BUILD_OS)-x86/$(LLVM_PREBUILTS_VERSION)/bin):$$PATH 
+# If current kernel version >= 5.9 
+else ifeq ($(shell expr $(VERSION) \>= 5 "&" $(PATCHLEVEL) \>= 9), 1)
+KERNEL_CROSS_COMPILE ?= $(abspath $(TARGET_TOOLS_PREFIX))
+# If current kernel version <= 5.9 
+else ifeq ($(shell expr $(VERSION) \>= 5 "&" $(PATCHLEVEL) \<= 9 "|" $(VERSION) \< 5), 1)
 ifeq ($(HOST_OS),darwin)
 KERNEL_CROSS_COMPILE ?= $(abspath prebuilts/gcc/darwin-x86/host/i686-apple-darwin-4.2.1/bin)/i686-apple-darwin11-
-else ifeq ($(NO_KERNEL_CROSS_COMPILE),true)
-KERNEL_CROSS_COMPILE ?= 
 else 
 KERNEL_CROSS_COMPILE ?= $(abspath prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.11-4.6/bin)/x86_64-linux-
 endif
 else
 KERNEL_CROSS_COMPILE ?= $(abspath $(TARGET_TOOLS_PREFIX))
 endif
+# Allow to use local gcc: "export NO_KERNEL_CROSS_COMPILE=true" 
+# or adding NO_KERNEL_CROSS_COMPILE := true to BoardConfig.mk
+ifeq ($(NO_KERNEL_CROSS_COMPILE),true)
+KERNEL_CROSS_COMPILE ?=
 endif
 
 KBUILD_OUTPUT := $(abspath $(TARGET_OUT_INTERMEDIATES)/kernel)
