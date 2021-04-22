@@ -157,7 +157,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.mot.deep.sleep.supported=true
 
 PRODUCT_COPY_FILES := \
-    vendor/gearlock/out/gri/gearlock:gearlock \
+    $(if $(wildcard vendor/gearlock/out/gri/gearlock),vendor/gearlock/out/gri/gearlock:gearlock) \
     $(if $(wildcard $(PRODUCT_DIR)init.rc),$(PRODUCT_DIR)init.rc:root/init.rc) \
     $(if $(wildcard $(PRODUCT_DIR)init.sh),$(PRODUCT_DIR),$(LOCAL_PATH)/)init.sh:system/etc/init.sh \
     $(if $(wildcard $(PRODUCT_DIR)modules.blacklist),$(PRODUCT_DIR),$(LOCAL_PATH)/)modules.blacklist:system/etc/modules.blacklist \
