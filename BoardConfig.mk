@@ -85,10 +85,10 @@ ZIP_OPTIMIZATION_NO_INTEGRITY := true
 
 DEVICE_MANIFEST_FILE := device/generic/common/manifest.xml
 
-BOARD_SEPOLICY_DIRS += device/generic/common/sepolicy/nonplat \
-                       system/bt/vendor_libs/linux/sepolicy \
-
-BOARD_PLAT_PRIVATE_SEPOLICY_DIR := device/generic/common/sepolicy/plat_private
+# BOARD_SEPOLICY_DIRS += device/generic/common/sepolicy/nonplat \
+#                        system/bt/vendor_libs/linux/sepolicy \
+# 
+# BOARD_PLAT_PRIVATE_SEPOLICY_DIR := device/generic/common/sepolicy/plat_private
 
 BOARD_BUILD_SYSTEM_ROOT_IMAGE := true
 BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE := 33554432
@@ -98,3 +98,4 @@ USE_XML_AUDIO_POLICY_CONF := 1
 
 BUILD_BROKEN_USES_BUILD_HOST_EXECUTABLE := true
 BUILD_BROKEN_USES_BUILD_HOST_STATIC_LIBRARY := true
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
