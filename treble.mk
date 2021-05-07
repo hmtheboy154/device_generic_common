@@ -25,6 +25,11 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
     android.hardware.camera.provider@2.4-service
 
+# Media codec
+PRODUCT_PACKAGES += \
+    android.hardware.media.c2@1.0-service \
+    android.hardware.media.omx@1.0-service
+
 # DumpState HAL
 PRODUCT_PACKAGES += \
     android.hardware.dumpstate@1.0-impl \
@@ -80,3 +85,8 @@ PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl \
     android.hardware.drm@1.0-service \
     android.hardware.drm@1.2-service.clearkey
+
+# GPS HAL
+PRODUCT_PACKAGES += \
+    android.hardware.gnss@1.0-impl \
+    android.hardware.gnss@1.0-service
