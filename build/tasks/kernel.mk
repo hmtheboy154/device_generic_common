@@ -7,7 +7,7 @@
 #
 #      http://www.apache.org/licenses/LICENSE-2.0
 #
-
+ifneq ($(IS_VBOX_x86_BUILD),true)
 ifneq ($(TARGET_NO_KERNEL),true)
 ifeq ($(TARGET_PREBUILT_KERNEL),)
 
@@ -137,3 +137,4 @@ ifdef TARGET_PREBUILT_MODULES
 endif
 endif # LINEAGE_BUILD
 endif # KBUILD_OUTPUT
+endif
