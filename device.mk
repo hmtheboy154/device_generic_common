@@ -174,11 +174,6 @@ endif
 
 $(call inherit-product,$(if $(wildcard $(PRODUCT_DIR)packages.mk),$(PRODUCT_DIR),$(LOCAL_PATH)/)packages.mk)
 
-# Inherit common Bliss stuff
-$(call inherit-product-if-exists,vendor/bliss/config/common.mk)
-$(call inherit-product-if-exists,vendor/bliss/config/common_full.mk)
-$(call inherit-product-if-exists,vendor/bliss/config/common_full_tablet_wifionly.mk)
-$(call inherit-product-if-exists,vendor/bliss/config/bliss_packages.mk)
 
 # Widevine addons
 ifeq ($(USE_LIBNDK_TRANSLATION_NB),true)
