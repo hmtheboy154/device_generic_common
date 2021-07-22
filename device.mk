@@ -176,8 +176,8 @@ $(call inherit-product,$(if $(wildcard $(PRODUCT_DIR)packages.mk),$(PRODUCT_DIR)
 
 # Inherit some common CherishOS stuff
 TARGET_INCLUDE_LIVE_WALLPAPERS := true
-$(call inherit-product-if-exists,vendor/bliss/config/common.mk)
-$(call inherit-product-if-exists,vendor/bliss/config/common_full.mk)
+$(call inherit-product-if-exists,vendor/cherish/config/common.mk)
+$(call inherit-product-if-exists,vendor/cherish/config/common_full.mk)
 $(call inherit-product, vendor/cherish/config/common_full_tablet_wifionly.mk)
 PRODUCT_GENERIC_PROPERTIES += \
     ro.cherish.maintainer=HMTheBoy154
